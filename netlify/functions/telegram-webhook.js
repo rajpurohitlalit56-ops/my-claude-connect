@@ -15,7 +15,7 @@ const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
 // Har product ka apna channel ID (apne asli channel IDs se replace karo)
 const CHANNEL_MAP = {
-  parmar4: '-1001234567890',
+  parmar4: '-1003986949274',
   gagan1: '-1009876543210',
   aditya2: '-1005556667777'
 };
