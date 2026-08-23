@@ -21,8 +21,8 @@ const PRODUCTS = {
   parmar4: {
     name: "Parmar 4.0 Batch",
     icon: "📘",
-    price: 49,
-    qr: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=example@upi%26pn=SSCStore%26am=49",
+    price: 44₹,
+    qr: "images/Qr44.jpg",
     channelId: "-1001234567890"
   },
   gagan1: {
