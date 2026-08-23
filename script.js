@@ -10,7 +10,7 @@ var BATCHES = [
     price: '₹44',
     duration: '1 year',
     demoHref: 'https://t.me/Sscbyrajbot?start=BQADAQADiwgAAtDbCUdz4EB-M913fBYE',
-    buyHref: 'https://t.me/parmar8700bot'
+    buyHref: 'chat-3.html?product=parmar4'
   },
   {
     alt: 'Parmar PYQ Series 6.0',
