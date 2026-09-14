@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Order Chat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#4F46E5;
+    --indigo-dark:#3730A3;
+    --emerald:#10B981;
+    --bg:#EEF0FA;
+    --bot-bubble:#FFFFFF;
+    --user-bubble:#4F46E5;
+    --text:#1E1B3A;
+    --muted:#6B7280;
+    --danger:#EF4444;
+    --radius:16px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:'Sora',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    display:flex;
+    flex-direction:column;
+    height:100dvh;
+    overflow:hidden;
+  }
+
+  /* Header */
+  .chat-header{
+    background:linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 100%);
+    color:#fff;
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    box-shadow:0 2px 10px rgba(79,70,229,0.25);
+    z-index:5;
+    flex-shrink:0;
+  }
+  .back-btn{
+    width:34px;height:34px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.15);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    cursor:pointer;
+    border:none;
+    color:#fff;
+    text-decoration:none;
+  }
+  .back-btn svg{width:18px;height:18px;}
+  .header-avatar{
+    width:38px;height:38px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.18);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;
+    flex-shrink:0;
+  }
+  .header-info{display:flex; flex-direction:column; min-width:0;}
+  .header-info .name{font-weight:600; font-size:15px; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .header-info .status{font-size:12px; opacity:0.85; display:flex; align-items:center; gap:5px;}
+  .status-dot{width:6px;height:6px;border-radius:50%;background:var(--emerald); display:inline-block;}
+
+  /* Chat body */
+  .chat-body{
+    flex:1;
+    overflow-y:auto;
+    padding:18px 12px 10px;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(79,70,229,0.05) 0%, transparent 40%),
+      radial-gradient(circle at 90% 60%, rgba(16,185,129,0.05) 0%, transparent 40%);
+  }
+  .date-chip{
+    align-self:center;
+    background:rgba(255,255,255,0.8);
+    color:var(--muted);
+    font-size:11px;
+    padding:4px 12px;
+    border-radius:20px;
+    margin:6px 0 14px;
+    font-weight:500;
+  }
+
+  .msg-row{
+    display:flex;
+    margin-bottom:10px;
+    max-width:100%;
+    animation:rise 0.32s ease;
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .msg-row.bot{justify-content:flex-start;}
+  .msg-row.user{justify-content:flex-end;}
+
+  .bubble{
+    max-width:78%;
+    padding:10px 13px;
+    border-radius:var(--radius);
+    font-size:14.5px;
+    line-height:1.45;
+    position:relative;
+    box-shadow:0 1px 2px rgba(0,0,0,0.06);
+  }
+  .bot .bubble{
+    background:var(--bot-bubble);
+    color:var(--text);
+    border-bottom-left-radius:4px;
+  }
+  .user .bubble{
+    background:var(--user-bubble);
+    color:#fff;
+    border-bottom-right-radius:4px;
+  }
+  .bubble .time{
+    display:block;
+    font-size:10.5px;
+    margin-top:4px;
+    opacity:0.55;
+    text-align:right;
+  }
+  .bubble.system{
+    background:transparent;
+    color:var(--muted);
+    font-size:12.5px;
+    text-align:center;
+    box-shadow:none;
+    padding:2px 8px;
+  }
+
+  .bubble img.qr{
+    width:100%;
+    max-width:210px;
+    border-radius:10px;
+    display:block;
+    margin-bottom:8px;
+    border:1px solid #E5E7EB;
+  }
+  .price-tag{
+    display:inline-block;
+    background:rgba(16,185,129,0.12);
+    color:#047857;
+    font-weight:700;
+    font-size:13px;
+    padding:3px 10px;
+    border-radius:8px;
+    margin-top:6px;
+  }
+
+  .qr-download{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:#F3F4F8;
+    color:var(--indigo-dark);
+    font-family:'Sora',sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    padding:7px 13px;
+    border-radius:20px;
+    border:1px solid #E0E1F5;
+    text-decoration:none;
+    margin-top:8px;
+    margin-left:8px;
+    cursor:pointer;
+  }
+  .qr-download:active{transform:scale(0.96);}
+  .qr-download svg{width:14px;height:14px;flex-shrink:0;}
+  .qr-row{display:flex; align-items:center; flex-wrap:wrap;}
+
+  .join-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:var(--emerald);
+    color:#fff;
+    font-family:'Sora',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    padding:11px 16px;
+    border-radius:24px;
+    text-decoration:none;
+    margin-top:10px;
+    border:none;
+    cursor:pointer;
+    width:100%;
+  }
+  .join-btn:active{transform:scale(0.98);}
+  .join-btn svg{width:16px;height:16px;flex-shrink:0;}
+
+  .copy-link-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:8px;
+    background:#F3F4F8;
+    border-radius:10px;
+    padding:8px 10px;
+  }
+  .copy-link-row input{
+    flex:1;
+    border:none;
+    background:transparent;
+    font-size:11.5px;
+    color:var(--muted);
+    outline:none;
+    min-width:0;
+  }
+  .copy-link-btn{
+    flex-shrink:0;
+    background:#fff;
+    border:1px solid #E0E1F5;
+    border-radius:8px;
+    padding:6px 10px;
+    font-family:'Sora',sans-serif;
+    font-size:11px;
+    font-weight:600;
+    color:var(--indigo-dark);
+    cursor:pointer;
+  }
+  .copy-link-btn:active{transform:scale(0.95);}
+  .copy-link-btn.copied{color:#047857;}
+
+  .buy-again-btn{
+    display:inline-block;
+    background:var(--indigo);
+    color:#fff;
+    font-family:'Sora',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    padding:9px 18px;
+    border-radius:22px;
+    text-decoration:none;
+    margin-top:8px;
+    border:none;
+    cursor:pointer;
+  }
+  .buy-again-btn:active{transform:scale(0.97);}
+
+  .video-wrap{
+    position:relative;
+    width:100%;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:6px;
+    background:#000;
+  }
+  .video-wrap iframe{
+    width:100%;
+    aspect-ratio:16/9;
+    border:none;
+    display:block;
+  }
+
+  .faq-panel{
+    margin-top:4px;
+  }
+  .faq-panel-title{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--indigo-dark);
+    margin-bottom:8px;
+  }
+  .faq-panel-title svg{width:15px;height:15px;flex-shrink:0;}
+  .faq-item{
+    margin-bottom:6px;
+  }
+  .faq-chip{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:#F3F4F8;
+    color:var(--indigo-dark);
+    border:1px solid #E5E4F5;
+    border-radius:14px;
+    padding:8px 12px;
+    font-family:'Sora',sans-serif;
+    font-size:12.5px;
+    font-weight:500;
+    cursor:pointer;
+  }
+  .faq-chip:active{transform:scale(0.98);}
+  .faq-answer{
+    display:none;
+    background:#fff;
+    border:1px solid #E5E4F5;
+    border-top:none;
+    border-radius:0 0 12px 12px;
+    padding:10px 12px;
+    font-size:12px;
+    color:var(--muted);
+    margin-top:-6px;
+    margin-bottom:2px;
+  }
+  .faq-answer.open{display:block;}
+  .faq-chip.active{
+    border-radius:14px 14px 0 0;
+    background:#EDECFB;
+  }
+
+  .support-group-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:var(--indigo);
+    color:#fff;
+    font-family:'Sora',sans-serif;
+    font-weight:700;
+    font-size:13.5px;
+    padding:10px 16px;
+    border-radius:22px;
+    text-decoration:none;
+    margin-top:10px;
+    border:none;
+    cursor:pointer;
+    width:100%;
+  }
+  .support-group-btn:active{transform:scale(0.98);}
+  .support-group-btn svg{width:16px;height:16px;flex-shrink:0;}
+
+  .bubble img.screenshot{
+    width:170px;
+    border-radius:10px;
+    display:block;
+  }
+
+  .status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    font-weight:600;
+    padding:5px 11px;
+    border-radius:20px;
+    margin-top:6px;
+  }
+  .status-pill.pending{background:#FEF3C7; color:#92400E;}
+  .status-pill.approved{background:#D1FAE5; color:#065F46;}
+  .status-pill.rejected{background:#FEE2E2; color:#991B1B;}
+  .status-pill .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+
+  .typing{
+    display:flex;
+    gap:4px;
+    padding:12px 14px;
+  }
+  .typing span{
+    width:7px;height:7px;border-radius:50%;
+    background:#B7B4D6;
+    animation:blink 1.2s infinite ease-in-out;
+  }
+  .typing span:nth-child(2){animation-delay:0.15s;}
+  .typing span:nth-child(3){animation-delay:0.3s;}
+  @keyframes blink{
+    0%,80%,100%{opacity:0.3; transform:scale(0.8);}
+    40%{opacity:1; transform:scale(1);}
+  }
+
+  /* Input bar */
+  .input-bar{
+    flex-shrink:0;
+    background:#fff;
+    border-top:1px solid #E5E7EB;
+    padding:10px 12px;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom));
+  }
+  .input-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .attach-btn{
+    width:42px;height:42px;
+    border-radius:50%;
+    border:none;
+    background:var(--indigo);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    flex-shrink:0;
+    transition:transform 0.15s ease, background 0.15s ease;
+  }
+  .attach-btn:active{transform:scale(0.92);}
+  .attach-btn svg{width:20px;height:20px;}
+  .attach-btn:disabled{background:#C7C4E8; cursor:not-allowed;}
+
+  .fake-input{
+    flex:1;
+    background:#F3F4F8;
+    border-radius:22px;
+    padding:11px 16px;
+    font-size:13.5px;
+    color:var(--muted);
+  }
+
+  .hint-text{
+    font-size:11px;
+    color:var(--muted);
+    text-align:center;
+    margin-top:6px;
+  }
+
+  #fileInput{display:none;}
+
+  ::-webkit-scrollbar{width:0px;}
+</style>
+</head>
+<body>
+
+  <div class="chat-header">
+    <a class="back-btn" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <div class="header-avatar" id="headerAvatar">📚</div>
+    <div class="header-info">
+      <div class="name" id="headerName">Loading...</div>
+      <div class="status"><span class="status-dot"></span> Order Assistant • Online</div>
+    </div>
+  </div>
+
+  <div class="chat-body" id="chatBody">
+    <div class="date-chip">Today</div>
+  </div>
+
+  <div class="input-bar">
+    <div class="input-row">
+      <button class="attach-btn" id="attachBtn" title="Send payment screenshot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a5 5 0 01-7.07-7.07l9.19-9.19a3 3 0 014.24 4.24l-9.19 9.19a1 1 0 01-1.41-1.41l8.48-8.49"/></svg>
+      </button>
+      <div class="fake-input" id="fakeInputText">Screenshot bhejne ke liye 📎 dabayein</div>
+    </div>
+    <input type="file" id="fileInput" accept="image/*">
+    <div class="hint-text">Sirf payment screenshot bheji jaye • JPG/PNG</div>
+  </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script>
+/* Yahi Firebase config jo product_page.html/index.html mein use ki thi — same project */
+var firebaseConfig = {
+  apiKey: "AIzaSyBLV9SCkEZFomf2sHyXt3f0yLIYFppSj0E",
+  authDomain: "try9653-aa039.firebaseapp.com",
+  projectId: "try9653-aa039",
+  storageBucket: "try9653-aa039.firebasestorage.app",
+  messagingSenderId: "351044147539",
+  appId: "1:351044147539:web:0aaf62f3d25d525440a9a6"
+};
+firebase.initializeApp(firebaseConfig);
+var chatAuth = firebase.auth();
+
+function isPopupBlockedErr(err){
+  return err && (
+    err.code === 'auth/popup-blocked' ||
+    err.code === 'auth/popup-closed-by-user' ||
+    err.code === 'auth/cancelled-popup-request' ||
+    err.code === 'auth/operation-not-supported-in-this-environment'
+  );
+}
+
+/* Returns the signed-in user, or null if we had to fall back to a
+   full-page redirect (in which case the page is about to navigate away —
+   the caller should stash whatever it needs in sessionStorage first via
+   savePendingScreenshot() and let init()/resumePendingScreenshot() finish
+   the job after the redirect comes back). */
+async function ensureSignedIn(){
+  if (chatAuth.currentUser) return chatAuth.currentUser;
+  const provider = new firebase.auth.GoogleAuthProvider();
+  try {
+    const result = await chatAuth.signInWithPopup(provider);
+    return result.user;
+  } catch (err) {
+    console.error('Sign-in popup error:', err);
+    if (isPopupBlockedErr(err)) {
+      await chatAuth.signInWithRedirect(provider);
+      return null; // page is navigating away now
+    }
+    throw err;
+  }
+}
+
+function savePendingScreenshot(productId, imageBase64){
+  try {
+    sessionStorage.setItem('pendingScreenshotOrder', JSON.stringify({ productId, imageBase64 }));
+  } catch(e){}
+}
+
+function takePendingScreenshot(productId){
+  let raw = null;
+  try { raw = sessionStorage.getItem('pendingScreenshotOrder'); } catch(e){}
+  if (!raw) return null;
+  try { sessionStorage.removeItem('pendingScreenshotOrder'); } catch(e){}
+  try {
+    const data = JSON.parse(raw);
+    if (data && data.productId === productId) return data.imageBase64;
+  } catch(e){}
+  return null;
+}
+</script>
+
+<script>
+/* ---------------------------------------------------------
+   PRODUCT DATA — ab yeh naye "get-product" function se aata
+   hai (jo netlify/functions/products.js file se padhta hai).
+   Naya product add karna ho toh sirf products.js edit karo,
+   is file mein kuch change nahi karna padega.
+--------------------------------------------------------- */
+
+const params = new URLSearchParams(window.location.search);
+const productId = params.get("product") || "parmar4";
+let product = null; // fetch hone ke baad set hoga
+
+const chatBody = document.getElementById("chatBody");
+const attachBtn = document.getElementById("attachBtn");
+const fileInput = document.getElementById("fileInput");
+const fakeInputText = document.getElementById("fakeInputText");
+
+function nowTime(){
+  return new Date().toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
+}
+
+function scrollDown(){
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function copyLink(btn, link){
+  navigator.clipboard.writeText(link).then(()=>{
+    const original = btn.textContent;
+    btn.textContent = "Copied ✓";
+    btn.classList.add('copied');
+    setTimeout(()=>{
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(()=>{
+    // fallback: select the text input for manual copy
+  });
+}
+
+function approvedMessageHTML(inviteLink){
+  if (!inviteLink) {
+    return `🎉 Payment verified! Aapka access approve ho gaya hai.<br>Invite link jald milega, thodi der mein page reload karein.`;
+  }
+  const safeLink = inviteLink.replace(/'/g, "\\'");
+  return `
+    🎉 Payment verified! Aapka access approve ho gaya hai.
+    <a class="join-btn" href="${inviteLink}" target="_blank" rel="noopener">
+      <svg viewBox="0 0 240 240" fill="currentColor"><path d="M120 0C53.7 0 0 53.7 0 120s53.7 120 120 120 120-53.7 120-120S186.3 0 120 0zm55.6 82.1l-19.4 91.4c-1.5 6.6-5.3 8.2-10.7 5.1l-29.6-21.8-14.3 13.7c-1.6 1.6-2.9 2.9-6 2.9l2.1-30.2 55-49.7c2.4-2.1-.5-3.3-3.7-1.2l-68 42.8-29.3-9.2c-6.4-2-6.5-6.4 1.3-9.4l114.6-44.2c5.3-2 9.9 1.3 8.2 9.8z"/></svg>
+      Join Telegram
+    </a>
+    <div class="copy-link-row">
+      <input type="text" readonly value="${inviteLink}" onclick="this.select()">
+      <button class="copy-link-btn" onclick="copyLink(this, '${safeLink}')">Copy</button>
+    </div>
+  `;
+}
+
+function addBotBubble(html, opts={}){
+  return new Promise(resolve=>{
+    const row = document.createElement('div');
+    row.className = 'msg-row bot';
+    const typing = document.createElement('div');
+    typing.className = 'bubble';
+    typing.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+    row.appendChild(typing);
+    chatBody.appendChild(row);
+    scrollDown();
+
+    setTimeout(()=>{
+      typing.innerHTML = html + (opts.noTime ? '' : `<span class="time">${nowTime()}</span>`);
+      scrollDown();
+      resolve(row);
+    }, opts.delay ?? 700);
+  });
+}
+
+function addUserBubble(html){
+  const row = document.createElement('div');
+  row.className = 'msg-row user';
+  row.innerHTML = `<div class="bubble">${html}<span class="time">${nowTime()}</span></div>`;
+  chatBody.appendChild(row);
+  scrollDown();
+  return row;
+}
+
+let orderStatusRow = null;
+let pollTimer = null;
+
+function qrMessageHTML(){
+  return `
+    <img class="qr" id="qrImg" src="${product.qr}" alt="Payment QR">
+    Neeche diye QR ko scan karke payment complete karein.
+    <div class="qr-row">
+      <div class="price-tag">₹${product.price} only</div>
+      <a class="qr-download" onclick="downloadQR('${product.qr}', '${product.name.replace(/\s+/g,'_')}_QR.png'); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
+        Download QR
+      </a>
+    </div>
+  `;
+}
+
+/* ---------------------------------------------------------
+   "HOW TO PAY" VIDEO — Odysee ka embed link yahan daalo.
+   Odysee video kholo, "Share" pe tap karo, "Embed" wala URL
+   copy karo (usually aisa dikhta hai):
+   https://odysee.com/$/embed/video-name/xxxxxxxx
+--------------------------------------------------------- */
+const HOW_TO_PAY_VIDEO_EMBED = "https://odysee.com/%24/embed/%40Selectionclasses%3Ac%2FVN20260829_123807%3A7?r=8sQV4WkcUWxyf2SXfT6x7LoSKxAyDsYU&signature=b1f46f172ae64f648242a4e6191311bf683414d3852718000f8258e5fac32ee36a6f7690e34c5f0008a6100074ac4dc1fcb7232fbef0a471330324628819f5be&signature_ts=1787988210";
+
+function videoMessageHTML(){
+  if (!HOW_TO_PAY_VIDEO_EMBED) return '';
+  return `
+    HOW TO BUY BATHCH-YE VIDEO DEKHO 👇
+    <div class="video-wrap">
+      <iframe src="${HOW_TO_PAY_VIDEO_EMBED}" allowfullscreen></iframe>
+    </div>
+  `;
+}
+
+/* ---------------------------------------------------------
+   FAQ PANEL — approve hone ke baad dikhta hai. Sawal/jawab
+   yahan edit karo, aur SUPPORT_GROUP_LINK mein apna Telegram
+   support group ka link daalo.
+--------------------------------------------------------- */
+const SUPPORT_GROUP_LINK = "https://t.me/Getmybatchbot";
+
+const FAQ_ITEMS = [
+  { q: "Payment issue ho raha hai?", a: "Screenshot dobara clear photo mein bhejein. Agar phir bhi dikkat ho, support group mein message karein — hum turant help karenge." },
+  { q: "Link expire ho gaya kya?", a: "Invite link ek baar use hone ke liye hai. Agar link kaam nahi kar raha, telegram ke search bar me jaake channel name daalo jaise parmar ." },
+  { q: "Course/batch kaam nahi kar raha?", a: "Kripya app/Telegram restart karein aur dobara try karein. Agar fir bhi issue ho, support group mein screenshot ke saath batayein." },
+  { q: "Refund ya batch change ho sakta hai?", a: "Verify hone ke baad payment final hai — course swap ya refund possible nahi hai. Kripya order se pehle sahi batch confirm kar lein." }
+];
+
+function faqPanelHTML(){
+  const chips = FAQ_ITEMS.map((item, i) => `
+    <div class="faq-item">
+      <button class="faq-chip" id="faqChip${i}" onclick="toggleFaq(${i})">${item.q}</button>
+      <div class="faq-answer" id="faqAnswer${i}">${item.a}</div>
+    </div>
+  `).join('');
+
+  return `
+    <div class="faq-panel">
+      <div class="faq-panel-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Koi sawal hai?
+      </div>
+      ${chips}
+      <a class="support-group-btn" href="${SUPPORT_GROUP_LINK}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 2L2 9.5l7 3 2 7 3-4 5 4L22 2z"/></svg>
+        Ask on Support Group
+      </a>
+    </div>
+  `;
+}
+
+function toggleFaq(i){
+  const answer = document.getElementById('faqAnswer' + i);
+  const chip = document.getElementById('faqChip' + i);
+  const isOpen = answer.classList.contains('open');
+  answer.classList.toggle('open', !isOpen);
+  chip.classList.toggle('active', !isOpen);
+  scrollDown();
+}
+
+async function startConversation(){
+  await addBotBubble(`Namaste! 👋 Aapne <b>${product.name}</b> select kiya hai.`, {delay:500});
+  await addBotBubble(qrMessageHTML());
+  if (HOW_TO_PAY_VIDEO_EMBED) {
+    await addBotBubble(videoMessageHTML());
+  }
+  await addBotBubble(`Payment ho jaane ke baad, screenshot yahin 📎 button se bhej dein — main aage ka process turant shuru kar dunga.`);
+}
+
+attachBtn.addEventListener('click', ()=>{
+  fileInput.click();
+});
+
+async function submitScreenshotOrder(currentUser, imageBase64){
+  addUserBubble(`<img class="screenshot" src="${imageBase64}" alt="Payment screenshot">`);
+
+  attachBtn.disabled = true;
+  fakeInputText.textContent = "Screenshot bhej diya gaya ✅";
+
+  await addBotBubble(`Screenshot mil gaya, dhanyavaad! 🙏`, {delay:600});
+  orderStatusRow = await addBotBubble(`
+    Aapka order review ke liye bhej diya gaya hai.
+    <div class="status-pill pending"><span class="dot"></span> Pending Review</div>
+  `, {delay:900});
+
+  try {
+    const response = await fetch('/.netlify/functions/submit-order', {
+      method: 'POST',
+      body: JSON.stringify({
+        productId,
+        productName: product.name,
+        price: product.price,
+        category: product.category || 'batch',
+        uid: currentUser.uid,
+        buyerEmail: currentUser.email || '',
+        imageBase64: imageBase64
+      })
+    });
+
+    let result;
+    const rawText = await response.text();
+    try {
+      result = JSON.parse(rawText);
+    } catch(parseErr) {
+      await addBotBubble(`⚠️ DEBUG: Server ne JSON nahi bheja.<br>Status: ${response.status}<br>Response: ${rawText.substring(0,300)}`);
+      return;
+    }
+
+    if (result.success) {
+      startPolling(result.orderId);
+    } else {
+      await addBotBubble(`⚠️ DEBUG: Function ne error diya.<br>Status: ${response.status}<br>Error: ${result.error || JSON.stringify(result)}`);
+    }
+  } catch (err) {
+    await addBotBubble(`⚠️ DEBUG: Fetch hi fail hua.<br>Error: ${err.message}`);
+  }
+}
+
+fileInput.addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async function(ev){
+    const imageBase64 = ev.target.result;
+
+    let currentUser;
+    try {
+      currentUser = await ensureSignedIn();
+    } catch (err) {
+      await addBotBubble(`⚠️ Sign in nahi ho paya. Kripya browser ka popup blocker check karein ya dobara try karein.`);
+      fileInput.value = '';
+      return;
+    }
+
+    if (!currentUser) {
+      /* ensureSignedIn() fell back to a full-page redirect — save the
+         screenshot so we can finish submitting it automatically once the
+         person comes back signed in (see resumePendingScreenshot()). */
+      savePendingScreenshot(productId, imageBase64);
+      return;
+    }
+
+    await submitScreenshotOrder(currentUser, imageBase64);
+  };
+  reader.readAsDataURL(file);
+});
+
+async function downloadQR(url, filename){
+  try{
+    const res = await fetch(url);
+    const blob = await res.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(blobUrl);
+  }catch(err){
+    // fallback: open in new tab if fetch/blob fails (e.g. CORS-blocked host)
+    window.open(url, '_blank');
+  }
+}
+
+function startPolling(orderId){
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(async ()=>{
+    try {
+      const res = await fetch(`/.netlify/functions/check-status?orderId=${orderId}`);
+      if (!res.ok) return;
+      const order = await res.json();
+
+      if (order.status === 'approved') {
+        clearInterval(pollTimer);
+        if (orderStatusRow) {
+          const pill = orderStatusRow.querySelector('.status-pill');
+          if (pill) { pill.className = 'status-pill approved'; pill.innerHTML = '<span class="dot"></span> Approved'; }
+        }
+        await addBotBubble(approvedMessageHTML(order.inviteLink));
+        await addBotBubble(`Dobara yeh batch lena hai (jaise kisi aur ke liye)? <button class="buy-again-btn" onclick="startFreshOrder()">🔄 Dobara Order Karein</button>`, {noTime:true, delay:400});
+        await addBotBubble(faqPanelHTML(), {noTime:true, delay:400});
+        attachBtn.disabled = true;
+        fakeInputText.textContent = "Order approved ho chuka hai ✅";
+      } else if (order.status === 'rejected') {
+        clearInterval(pollTimer);
+        if (orderStatusRow) {
+          const pill = orderStatusRow.querySelector('.status-pill');
+          if (pill) { pill.className = 'status-pill rejected'; pill.innerHTML = '<span class="dot"></span> Rejected'; }
+        }
+        await addBotBubble(`❌ Aapka screenshot verify nahi ho paya. Kripya sahi payment screenshot dobara bhejein.`);
+        await addBotBubble(`<button class="buy-again-btn" onclick="startFreshOrder()">🔄 Dobara Try Karein</button>`, {noTime:true, delay:400});
+        attachBtn.disabled = false;
+        fakeInputText.textContent = "Screenshot bhejne ke liye 📎 dabayein";
+      }
+      // agar "pending" hai, kuch nahi karna — agli baar phir check karega
+    } catch (err) {
+      // silent fail, agli baar phir try karega
+    }
+  }, 8000);
+}
+
+/* Resolves once with the signed-in user, or null — WITHOUT ever triggering
+   a popup itself. onAuthStateChanged fires immediately with whatever
+   session Firebase already has persisted for this browser/origin. */
+function waitForAuthState(){
+  return new Promise((resolve)=>{
+    const unsubscribe = chatAuth.onAuthStateChanged(function(user){
+      unsubscribe();
+      resolve(user);
+    });
+  });
+}
+
+async function renderExistingOrder(order){
+  if (order.status === 'pending') {
+    orderStatusRow = await addBotBubble(`
+      Aapka order abhi bhi review mein hai.
+      <div class="status-pill pending"><span class="dot"></span> Pending Review</div>
+    `);
+    attachBtn.disabled = true;
+    fakeInputText.textContent = "Screenshot bhej diya gaya ✅";
+    startPolling(order.orderId);
+  } else if (order.status === 'approved') {
+    await addBotBubble(approvedMessageHTML(order.inviteLink));
+    await addBotBubble(`Dobara yeh batch lena hai (jaise kisi aur ke liye)? <button class="buy-again-btn" onclick="startFreshOrder()">🔄 Dobara Order Karein</button>`, {noTime:true, delay:400});
+    await addBotBubble(faqPanelHTML(), {noTime:true, delay:400});
+    attachBtn.disabled = true;
+    fakeInputText.textContent = "Order approved ho chuka hai ✅";
+  } else if (order.status === 'rejected') {
+    await addBotBubble(`❌ Aapka pichla screenshot verify nahi ho paya. Kripya sahi payment screenshot dobara bhejein.`);
+    await addBotBubble(`<button class="buy-again-btn" onclick="startFreshOrder()">🔄 Dobara Try Karein</button>`, {noTime:true, delay:400});
+  }
+}
+
+/* Source of truth ab hamesha Firestore hai (get-my-orders), localStorage
+   nahi — isse "My Orders" tab aur ye chat page hamesha same data dikhayenge. */
+async function loadOrderFromFirestore(user){
+  await addBotBubble(`Aapka status check kar raha hoon...`, {delay:300});
+  try {
+    const idToken = await user.getIdToken();
+    const res = await fetch('/.netlify/functions/get-my-orders', {
+      headers: { 'Authorization': 'Bearer ' + idToken }
+    });
+    if (!res.ok) throw new Error('request failed');
+    const orders = await res.json();
+    const myOrder = Array.isArray(orders) ? orders.find(o => o.productId === productId) : null;
+
+    if (myOrder) {
+      await renderExistingOrder(myOrder);
+    } else {
+      startConversation();
+    }
+  } catch (err) {
+    console.error('Order fetch error:', err);
+    await addBotBubble(`⚠️ Order status load nahi ho paaya. Page reload karke dobara try karein.`);
+  }
+}
+
+async function handleChatSignIn(){
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const result = await chatAuth.signInWithPopup(provider);
+    await loadOrderFromFirestore(result.user);
+  } catch (err) {
+    console.error('Sign-in popup error:', err);
+    if (isPopupBlockedErr(err)) {
+      try {
+        await chatAuth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+      } catch (err2) {
+        console.error('Sign-in redirect error:', err2);
+        await addBotBubble(`⚠️ Sign in nahi ho paya. Kripya browser ka popup blocker check karein ya dusre browser mein try karein.`);
+      }
+      return;
+    }
+    await addBotBubble(`⚠️ Sign in nahi ho paya. Dobara try karein.`);
+  }
+}
+
+async function resumeIfExists(){
+  const user = await waitForAuthState();
+  if (user) {
+    await loadOrderFromFirestore(user);
+  } else {
+    /* Koi bhi existing order sirf sign-in ke baad hi Firestore se pata
+       chal sakta hai, isliye pehle sign-in karwate hain (button click se,
+       taaki popup browser me blocked na ho). */
+    await addBotBubble(`Namaste! 👋 Apna order status dekhne ya <b>${product.name}</b> ke liye order karne ke liye pehle Google se sign in karein.
+      <button class="buy-again-btn" onclick="handleChatSignIn()">🔐 Sign in with Google</button>`, {delay:400});
+  }
+}
+
+function startFreshOrder(){
+  attachBtn.disabled = false;
+  fakeInputText.textContent = "Screenshot bhejne ke liye 📎 dabayein";
+  addBotBubble(`Bilkul! Naya order shuru karte hain <b>${product.name}</b> ke liye.`, {delay:300}).then(async ()=>{
+    await addBotBubble(qrMessageHTML());
+    if (HOW_TO_PAY_VIDEO_EMBED) {
+      await addBotBubble(videoMessageHTML());
+    }
+  });
+}
+
+async function resumePendingScreenshotIfAny(){
+  /* Wait for the redirect sign-in (if any) to finish so chatAuth.currentUser
+     is populated before we check for a pending screenshot. */
+  let redirectUser = null;
+  try {
+    const redirectResult = await chatAuth.getRedirectResult();
+    redirectUser = redirectResult && redirectResult.user ? redirectResult.user : null;
+  } catch (err) {
+    console.error('Redirect sign-in error:', err);
+  }
+
+  const currentUser = redirectUser || chatAuth.currentUser;
+  const pendingImage = takePendingScreenshot(productId);
+  if (pendingImage && currentUser) {
+    await submitScreenshotOrder(currentUser, pendingImage);
+    return true;
+  }
+  return false;
+}
+
+async function init(){
+  try {
+    const res = await fetch(`/.netlify/functions/get-product?id=${productId}`);
+    if (!res.ok) throw new Error('Product not found');
+    product = await res.json();
+
+    document.getElementById("headerName").textContent = product.name;
+    document.getElementById("headerAvatar").textContent = product.icon;
+
+    const resumedScreenshot = await resumePendingScreenshotIfAny();
+    if (!resumedScreenshot) {
+      resumeIfExists();
+    }
+  } catch (err) {
+    document.getElementById("headerName").textContent = "Product not found";
+    await addBotBubble(`⚠️ Yeh product nahi mila. Sahi link se try karein, ya support se sampark karein.`);
+  }
+}
+
+init();
+</script>
+
+</body>
+</html>

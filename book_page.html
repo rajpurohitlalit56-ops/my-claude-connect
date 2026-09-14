@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitleTag">Book — My Selection Prep</title>
+
+  <!-- SEO & Schema Markup (JS se fill hota hai data load hone ke baad) -->
+  <script type="application/ld+json" id="bookSchema">
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "",
+    "publisher": "My Selection Prep",
+    "offers": { "@type": "Offer", "priceCurrency": "INR", "availability": "https://schema.org/InStock" }
+  }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      /* GRADIENT COLOR PALETTE */
+      --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+      --accent-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+      --bg-gradient: linear-gradient(135deg, #eef2ff 0%, #f1f5f9 35%, #e0e7ff 70%, #f3e8ff 100%);
+      --card-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(241, 245, 249, 0.78) 100%);
+      --box-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 242, 255, 0.6) 100%);
+      --pill-gradient: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+      --badge-gradient: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
+      --gold-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      
+      --glass-border: rgba(255, 255, 255, 0.85);
+      --glass-border-subtle: rgba(218, 226, 243, 0.7);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 9999px;
+      --shadow-glossy: 0 10px 30px rgba(30, 41, 59, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02);
+      --shadow-button: 0 8px 20px rgba(37, 99, 235, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 75px;
+      min-height: 100vh;
+    }
+
+    /* 1. TRANSLUCENT GRADIENT HEADER */
+    .app-header {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(241, 245, 249, 0.72) 100%);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid var(--glass-border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 6px 14px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    }
+    
+    .app-header.header-hidden {
+      transform: translateY(-100%);
+    }
+
+    .header-content {
+      max-width: 620px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .brand-logo svg {
+      width: 18px;
+      height: 18px;
+      stroke: #2563eb;
+    }
+
+    /* GRADIENT HAMBURGER BUTTON */
+    .icon-btn {
+      background: var(--box-gradient);
+      border: 1px solid var(--glass-border);
+      border-radius: 9px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .icon-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    .icon-btn:active {
+      transform: scale(0.94);
+    }
+
+    /* GRADIENT DROPDOWN MENU */
+    .nav-menu-dropdown {
+      display: none;
+      position: absolute;
+      top: 46px;
+      right: 14px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(241, 245, 249, 0.94) 100%);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.12);
+      width: 190px;
+      padding: 6px 0;
+      z-index: 1001;
+    }
+    .nav-menu-dropdown.active {
+      display: block;
+    }
+    .nav-menu-dropdown a {
+      display: block;
+      padding: 8px 14px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.825rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .nav-menu-dropdown a:hover {
+      background: var(--pill-gradient);
+      color: #1d4ed8;
+    }
+
+    .container {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 14px;
+    }
+
+    /* COVER IMAGE WITH GRADIENT BORDER FRAME */
+    .cover-card-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    
+    .cover-card {
+      width: auto;
+      max-width: 195px;
+      max-height: 340px;
+      background: var(--box-gradient);
+      border-radius: var(--radius-lg);
+      padding: 3px;
+      border: 1px solid var(--glass-border);
+      overflow: hidden;
+      box-shadow: var(--shadow-glossy), 0 12px 28px rgba(37, 99, 235, 0.08);
+      position: relative;
+    }
+    .cover-card img {
+      width: 100%;
+      height: auto;
+      max-height: 334px;
+      object-fit: contain;
+      display: block;
+      border-radius: 15px;
+    }
+
+    /* GRADIENT TAGS & SHARE BAR */
+    .action-bar-below-cover {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 14px;
+      gap: 10px;
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      max-width: 280px;
+      background: var(--box-gradient);
+      color: #2563eb;
+      border: 1px solid var(--glass-border);
+      padding: 9px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform 0.15s ease;
+    }
+    .share-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* SHARE COPIED TOAST */
+    .share-toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(15, 23, 42, 0.92);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 700;
+      z-index: 2000;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .share-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* TITLE & METRICS */
+    .product-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+    }
+    .meta-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+    .rating {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+
+    /* HERO MULTI-STOP GRADIENT CTA BUTTON */
+    .hero-download-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      width: 100%;
+      background: var(--primary-gradient);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      font-weight: 800;
+      font-size: 0.925rem;
+      box-shadow: var(--shadow-button);
+      margin-bottom: 16px;
+      transition: all 0.2s ease;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-download-btn::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transform: skewX(-20deg);
+      transition: 0.5s;
+    }
+    .hero-download-btn:hover::after {
+      left: 150%;
+    }
+    .hero-download-btn .sub-badge {
+      font-size: 0.725rem;
+      font-weight: 600;
+      opacity: 0.95;
+      background: rgba(255, 255, 255, 0.22);
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* MODERN GLASSMOPHIC GRADIENT CARDS */
+    .section-card {
+      background: var(--card-gradient);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--glass-border);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-glossy);
+    }
+    
+    .section-title {
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title svg {
+      color: #2563eb;
+    }
+
+    /* PREVIEW SECTION */
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .preview-counter {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .pdf-vertical-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .pdf-page-card {
+      position: relative;
+      width: 100%;
+      max-width: 290px;
+      aspect-ratio: 9 / 14;
+      background: #ffffff;
+      border: 1px solid var(--glass-border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+
+    .pdf-page-card canvas,
+    .pdf-page-card img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover;
+      display: block;
+    }
+
+    .page-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.85) 100%);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      font-size: 0.675rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+
+    .load-more-container {
+      margin-top: 14px;
+      text-align: center;
+    }
+    .btn-load-more {
+      width: 100%;
+      max-width: 290px;
+      background: var(--pill-gradient);
+      color: #1d4ed8;
+      border: 1px solid var(--glass-border-subtle);
+      padding: 9px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.825rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+    }
+
+    /* EXAM RELEVANCE GRADIENT PILLS */
+    .exam-tags-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .exam-pill {
+      background: var(--pill-gradient);
+      color: #1d4ed8;
+      font-size: 0.775rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--glass-border-subtle);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    }
+
+    /* SPECIFICATIONS GRADIENT GRID */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .spec-box {
+      background: var(--box-gradient);
+      padding: 8px 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border-subtle);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .spec-key {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      display: block;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .spec-val {
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* ABOUT THIS BOOK */
+    .features-list {
+      list-style: none;
+    }
+    .features-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      font-size: 0.825rem;
+      color: #334155;
+    }
+    .features-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #16a34a;
+      font-weight: 800;
+    }
+
+    /* TOPICS INDEX WITH GRADIENT INPUT & ITEMS */
+    .search-filter-box {
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .search-filter-box input {
+      width: 100%;
+      padding: 8px 12px 8px 34px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border-subtle);
+      font-size: 0.8rem;
+      outline: none;
+      background: var(--box-gradient);
+    }
+    .search-filter-box input:focus {
+      border-color: #2563eb;
+      background: #ffffff;
+    }
+    .search-filter-box svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    .toc-item {
+      background: var(--box-gradient);
+      border: 1px solid var(--glass-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.775rem;
+      font-weight: 600;
+      color: #334155;
+    }
+    .toc-item.hidden-lazy {
+      display: none;
+    }
+    .toc-number {
+      background: var(--badge-gradient);
+      color: #ffffff;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      box-shadow: 0 2px 5px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-toggle-lazy {
+      width: 100%;
+      background: transparent;
+      border: 1px dashed rgba(37, 99, 235, 0.4);
+      color: #2563eb;
+      padding: 8px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    /* REPORT LINK */
+    .report-link-container {
+      text-align: center;
+      margin: 12px 0;
+    }
+    .btn-report {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.775rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* 2. FLOATING COMPACT GLOSSY GRADIENT STICKY BOTTOM BAR */
+    .sticky-bar {
+      position: fixed;
+      bottom: 8px;
+      left: 12px;
+      right: 12px;
+      max-width: 620px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(241, 245, 249, 0.82) 100%);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 6px 12px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+      z-index: 999;
+    }
+    .sticky-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .price-box {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .price-old {
+      text-decoration: line-through;
+      color: var(--text-muted);
+      font-size: 0.7rem;
+    }
+    .price-new {
+      font-size: 1.05rem;
+      font-weight: 800;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .download-btn {
+      flex: 1;
+      background: var(--primary-gradient);
+      color: #ffffff;
+      text-align: center;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.825rem;
+      text-decoration: none;
+      box-shadow: var(--shadow-button);
+      letter-spacing: 0.2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. COMPACT GRADIENT HEADER -->
+  <header class="app-header" id="appHeader">
+    <div class="header-content">
+      <a href="index.html" class="brand-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        My Selection Prep
+      </a>
+      
+      <!-- COMPACT HAMBURGER MENU BUTTON -->
+      <button class="icon-btn" onclick="toggleMenu()" title="Menu" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- GRADIENT DROPDOWN MENU — site ke 4 main sections -->
+      <div class="nav-menu-dropdown" id="navMenu">
+        <a href="index.html">🏠 Home</a>
+        <a href="index.html?section=all">🎯 Batches</a>
+        <a href="index.html?section=books">📚 Books</a>
+        <a href="index.html?section=orders">🧾 My Orders</a>
+        <a href="index.html?section=support">💬 Support</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- COVER IMAGE -->
+    <div class="cover-card-wrapper">
+      <div class="cover-card">
+        <img id="bookCoverImg" src="https://placehold.co/540x960/1e293b/ffffff.png?text=Loading..." alt="Book Cover">
+      </div>
+    </div>
+
+    <!-- TITLE & METRICS -->
+    <h1 class="product-title" id="bookTitle">Loading book…</h1>
+    <div class="meta-bar" id="bookMetaBar"></div>
+
+    <!-- HERO DIRECT GRADIENT DOWNLOAD BUTTON -->
+    <a href="javascript:void(0)" class="hero-download-btn" id="heroDownloadBtn">
+      <span id="heroDownloadLabel">⚡ DIRECT DOWNLOAD PDF</span>
+      <span class="sub-badge" id="heroDownloadSub">Loading…</span>
+    </a>
+
+    <!-- PREVIEW SECTION -->
+    <div class="section-card" id="previewSection">
+      <div class="preview-header">
+        <div class="section-title" style="margin-bottom: 0;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          Read A Preview
+        </div>
+        <span class="preview-counter" id="preview-counter">Loading previews…</span>
+      </div>
+
+      <div id="pdf-container" class="pdf-vertical-stack"></div>
+
+      <div class="load-more-container" id="load-more-wrap" style="display:none;">
+        <button class="btn-load-more" id="load-more-btn" onclick="loadMorePages()">
+          Load 10 More Preview Pages
+        </button>
+      </div>
+    </div>
+
+    <!-- EXAM RELEVANCE SECTION -->
+    <div class="section-card" id="examTagsCard" style="display:none;">
+      <div class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+        Exam Relevance
+      </div>
+      <div class="exam-tags-grid" id="examTagsGrid"></div>
+    </div>
+
+    <!-- BOOK SPECIFICATIONS -->
+    <div class="section-card" id="specsCard" style="display:none;">
+      <div class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        Specifications
+      </div>
+      <div class="specs-grid" id="specsGrid"></div>
+    </div>
+
+    <!-- ABOUT THIS BOOK -->
+    <div class="section-card" id="aboutCard" style="display:none;">
+      <div class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        About This Book
+      </div>
+      <p id="aboutText" style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;"></p>
+      <ul class="features-list" id="featuresList"></ul>
+    </div>
+
+    <!-- TOPICS INDEX WITH FILTER -->
+    <div class="section-card" id="topicsCard" style="display:none;">
+      <div class="section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        Topics Covered
+      </div>
+
+      <div class="search-filter-box">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="toc-search" placeholder="Search topic (e.g. Geometry)..." onkeyup="filterTopics()">
+      </div>
+
+      <div class="toc-grid" id="toc-grid"></div>
+
+      <button class="btn-toggle-lazy" id="toc-toggle-btn" onclick="toggleLazyTopics()">
+        <span id="toc-toggle-label">Show All Topics</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+    </div>
+
+    <!-- REPORT BROKEN LINK -->
+    <div class="report-link-container">
+      <button class="btn-report" onclick="alert('File issue reported to My Selection Prep admin.')">
+        🚩 Report Link Issue
+      </button>
+    </div>
+
+  </div>
+
+  <!-- 2. FLOATING COMPACT GLOSSY GRADIENT STICKY BOTTOM BAR -->
+  <div class="sticky-bar">
+    <div class="sticky-content">
+      <div class="price-box">
+        <span class="price-old" id="stickyPriceOld" style="display:none;"></span>
+        <span class="price-new" id="stickyPriceNew">…</span>
+      </div>
+      <a href="javascript:void(0)" class="download-btn" id="stickyDownloadBtn">
+        ⚡ DOWNLOAD PDF
+      </a>
+    </div>
+  </div>
+
+  <!-- PDF.js — GitHub PDF link ke pages ko seedha image (canvas) me render karne ke liye -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // 1. SCROLL AUTO-HIDE HEADER
+    let lastScrollTop = 0;
+    const header = document.getElementById('appHeader');
+
+    window.addEventListener('scroll', () => {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop && scrollTop > 40) {
+        header.classList.add('header-hidden');
+      } else {
+        header.classList.remove('header-hidden');
+      }
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+
+    // 2. TOGGLE MENU
+    function toggleMenu() {
+      document.getElementById('navMenu').classList.toggle('active');
+    }
+
+    document.addEventListener('click', function(e) {
+      const navMenu = document.getElementById('navMenu');
+      const btn = document.querySelector('.icon-btn');
+      if (!btn.contains(e.target) && !navMenu.contains(e.target)) {
+        navMenu.classList.remove('active');
+      }
+    });
+
+    // 3. SHARE FUNCTION — hamesha current page ka link copy karta hai clipboard me
+    function showShareToast() {
+      var toast = document.getElementById('shareToast');
+      toast.classList.add('show');
+      clearTimeout(toast._hideTimer);
+      toast._hideTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+    }
+
+    function sharePage() {
+      var url = window.location.href;
+
+      function fallbackCopy() {
+        var ta = document.createElement('textarea');
+        ta.value = url;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        showShareToast();
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(showShareToast).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
+      }
+    }
+
+    // 4. TOPICS LAZY FILTER + SEARCH (topics dynamically load hone ke baad kaam karta hai)
+    var isTocExpanded = false;
+    var TOC_VISIBLE_COUNT = 6;
+
+    function toggleLazyTopics() {
+      const hiddenItems = document.querySelectorAll('#toc-grid .hidden-lazy');
+      const btn = document.getElementById('toc-toggle-btn');
+      const label = document.getElementById('toc-toggle-label');
+
+      if (!isTocExpanded) {
+        hiddenItems.forEach(item => item.style.display = 'flex');
+        label.innerText = 'Show Less';
+        isTocExpanded = true;
+      } else {
+        hiddenItems.forEach(item => item.style.display = 'none');
+        label.innerText = 'Show All ' + document.querySelectorAll('#toc-grid .toc-item').length + ' Topics';
+        isTocExpanded = false;
+      }
+    }
+
+    function filterTopics() {
+      const query = document.getElementById('toc-search').value.toLowerCase();
+      const items = document.querySelectorAll('#toc-grid .toc-item');
+      const btn = document.getElementById('toc-toggle-btn');
+
+      if (query.trim() !== '') {
+        btn.style.display = 'none';
+        items.forEach(item => {
+          const text = item.innerText.toLowerCase();
+          item.style.display = text.includes(query) ? 'flex' : 'none';
+        });
+      } else {
+        btn.style.display = items.length > TOC_VISIBLE_COUNT ? 'flex' : 'none';
+        items.forEach((item, index) => {
+          item.style.display = (index >= TOC_VISIBLE_COUNT && !isTocExpanded) ? 'none' : 'flex';
+        });
+      }
+    }
+
+    /* =========================================================
+       5. FIRESTORE-DRIVEN DATA LOADING
+       previewImages: admin panel se diye gaye direct image links
+       (GitHub repo se, PDF page ko image me convert karke) —
+       koi PDF.js/canvas rendering nahi, seedhe <img> dikhte hain.
+       ========================================================= */
+    var currentBook = null;
+    var previewImagesList = [];
+    var previewRenderedCount = 0;
+    var PREVIEW_INITIAL = 3;
+    var PREVIEW_BATCH = 10;
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/[&<>"']/g, function(c){
+        return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+      });
+    }
+
+    /* GitHub "blob" page ka normal link diya ho toh use seedhe raw file link me convert
+       kar dete hain — blob wala link kabhi bhi <img>/PDF loader me directly nahi chalta. */
+    function toDirectImageUrl(url) {
+      if (!url) return url;
+      url = String(url).trim();
+      const m = url.match(/^https?:\/\/github\.com\/([^\/]+)\/([^\/]+)\/blob\/(.+?)(\?.*)?$/);
+      if (m) return 'https://raw.githubusercontent.com/' + m[1] + '/' + m[2] + '/' + m[3];
+      return url;
+    }
+
+    /* ---- Manual image-list preview (purana tarika) ---- */
+    function renderPreviewBatch(count) {
+      const container = document.getElementById('pdf-container');
+      const total = Math.min(previewRenderedCount + count, previewImagesList.length);
+      for (let i = previewRenderedCount; i < total; i++) {
+        const card = document.createElement('div');
+        card.className = 'pdf-page-card';
+        card.innerHTML = '<img src="' + escapeHtml(toDirectImageUrl(previewImagesList[i])) + '" alt="Preview Page ' + (i+1) + '" loading="lazy">' +
+          '<span class="page-badge">Page ' + (i+1) + '</span>';
+        container.appendChild(card);
+      }
+      previewRenderedCount = total;
+      document.getElementById('preview-counter').innerText = previewRenderedCount + ' of ' + previewImagesList.length + ' preview pages';
+      document.getElementById('load-more-wrap').style.display = (previewRenderedCount < previewImagesList.length) ? 'block' : 'none';
+    }
+
+    /* ---- Naya tarika: seedha PDF link do, hum khud pages ko image me render kar dete hain ---- */
+    var currentPdfDoc = null;
+
+    function renderPdfPage(pageNum) {
+      return currentPdfDoc.getPage(pageNum).then(function(page){
+        const baseViewport = page.getViewport({ scale: 1 });
+        const scale = 640 / baseViewport.width;
+        const viewport = page.getViewport({ scale: scale });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        return page.render({ canvasContext: ctx, viewport: viewport }).promise.then(function(){
+          const card = document.createElement('div');
+          card.className = 'pdf-page-card';
+          card.appendChild(canvas);
+          const badge = document.createElement('span');
+          badge.className = 'page-badge';
+          badge.textContent = 'Page ' + pageNum;
+          card.appendChild(badge);
+          document.getElementById('pdf-container').appendChild(card);
+        });
+      });
+    }
+
+    function renderPdfBatch(count) {
+      const total = Math.min(previewRenderedCount + count, currentPdfDoc.numPages);
+      const pageNums = [];
+      for (let i = previewRenderedCount + 1; i <= total; i++) pageNums.push(i);
+
+      function next(idx) {
+        if (idx >= pageNums.length) {
+          previewRenderedCount = total;
+          document.getElementById('preview-counter').innerText = previewRenderedCount + ' of ' + currentPdfDoc.numPages + ' preview pages';
+          document.getElementById('load-more-wrap').style.display = (previewRenderedCount < currentPdfDoc.numPages) ? 'block' : 'none';
+          return;
+        }
+        renderPdfPage(pageNums[idx]).then(function(){ next(idx + 1); }).catch(function(){ next(idx + 1); });
+      }
+      next(0);
+    }
+
+    function loadMorePages() {
+      if (currentPdfDoc) renderPdfBatch(PREVIEW_BATCH);
+      else renderPreviewBatch(PREVIEW_BATCH);
+    }
+
+    function renderPreviewSection(p) {
+      previewRenderedCount = 0;
+      currentPdfDoc = null;
+      const container = document.getElementById('pdf-container');
+      container.innerHTML = '';
+      document.getElementById('load-more-wrap').style.display = 'none';
+
+      previewImagesList = (p.previewImages || '').split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+      const pdfUrl = toDirectImageUrl((p.pdfLink || '').trim());
+
+      // Priority 1: manual image list (purana tarika, agar bhara hai)
+      if (previewImagesList.length) {
+        document.getElementById('preview-counter').innerText = 'Loading previews…';
+        renderPreviewBatch(PREVIEW_INITIAL);
+        return;
+      }
+
+      // Priority 2: seedha PDF link — pdf.js se pages ko image me convert karke dikhao
+      if (pdfUrl && window.pdfjsLib) {
+        document.getElementById('preview-counter').innerText = 'PDF load ho raha hai…';
+        pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf){
+          currentPdfDoc = pdf;
+          renderPdfBatch(PREVIEW_INITIAL);
+        }).catch(function(){
+          container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); text-align:center; width:100%;">PDF preview load nahi ho paya.</p>';
+          document.getElementById('preview-counter').innerText = 'Preview unavailable';
+        });
+        return;
+      }
+
+      container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); text-align:center; width:100%;">Preview jald hi upload kiya jayega.</p>';
+      document.getElementById('preview-counter').innerText = 'No preview available';
+    }
+
+    /* Rating/Downloads text aur purani price har book/batch ke liye same fixed default
+       use karte hain — admin ko har product me alag se bharne ki zaroorat nahi.
+       (Chahe toh admin panel me per-book value bhi de sakta hai, wo default se priority lega.) */
+    var DEFAULT_RATING_TEXT = '★ 4.8 (15,200+ Ratings)';
+    var DEFAULT_DOWNLOADS_TEXT = '22.5k+ Downloads';
+    var DEFAULT_OLD_PRICE_MULTIPLIER = 2; // admin ne purani price na di ho toh price x2 dikhega
+
+    function renderMetaBar(p) {
+      const parts = [];
+      const ratingText = (p.ratingText && p.ratingText.trim()) ? p.ratingText : DEFAULT_RATING_TEXT;
+      const downloadsText = (p.downloadsText && p.downloadsText.trim()) ? p.downloadsText : DEFAULT_DOWNLOADS_TEXT;
+      parts.push('<span class="rating">' + escapeHtml(ratingText) + '</span>');
+      parts.push('<span>📥 ' + escapeHtml(downloadsText) + '</span>');
+      if (p.pagesCount) parts.push('<span>📄 ' + p.pagesCount + ' Pages</span>');
+      document.getElementById('bookMetaBar').innerHTML = parts.join('<span>•</span>');
+    }
+
+    function renderExamTags(examTagsRaw) {
+      const tags = (examTagsRaw || '').split(',').map(function(t){ return t.trim(); }).filter(Boolean);
+      const card = document.getElementById('examTagsCard');
+      if (!tags.length) { card.style.display = 'none'; return; }
+      card.style.display = '';
+      document.getElementById('examTagsGrid').innerHTML = tags.map(function(t){
+        return '<span class="exam-pill">' + escapeHtml(t) + '</span>';
+      }).join('');
+    }
+
+    function renderSpecs(p) {
+      const specs = [];
+      if (p.author) specs.push(['Author', p.author]);
+      specs.push(['Publisher', p.publisher || 'My Selection Prep']);
+      if (p.pagesCount) specs.push(['Total Pages', p.pagesCount + ' Pages']);
+      if (p.language) specs.push(['Language', p.language]);
+      const card = document.getElementById('specsCard');
+      if (!specs.length) { card.style.display = 'none'; return; }
+      card.style.display = '';
+      document.getElementById('specsGrid').innerHTML = specs.map(function(s){
+        return '<div class="spec-box"><span class="spec-key">' + escapeHtml(s[0]) + '</span><span class="spec-val">' + escapeHtml(s[1]) + '</span></div>';
+      }).join('');
+    }
+
+    function renderAbout(p) {
+      const about = p.fullDescription || p.desc || '';
+      const features = (p.overview || '').split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
+      const card = document.getElementById('aboutCard');
+      if (!about && !features.length) { card.style.display = 'none'; return; }
+      card.style.display = '';
+      document.getElementById('aboutText').textContent = about;
+      document.getElementById('aboutText').style.display = about ? '' : 'none';
+      document.getElementById('featuresList').innerHTML = features.map(function(f){
+        return '<li>' + escapeHtml(f) + '</li>';
+      }).join('');
+    }
+
+    function renderTopics(topicsRaw) {
+      const topics = (topicsRaw || '').split(',').map(function(t){ return t.trim(); }).filter(Boolean);
+      const card = document.getElementById('topicsCard');
+      if (!topics.length) { card.style.display = 'none'; return; }
+      card.style.display = '';
+      isTocExpanded = false;
+      document.getElementById('toc-grid').innerHTML = topics.map(function(t, i){
+        return '<div class="toc-item' + (i >= TOC_VISIBLE_COUNT ? ' hidden-lazy' : '') + '"><span class="toc-number">' + (i+1) + '</span> ' + escapeHtml(t) + '</div>';
+      }).join('');
+      const btn = document.getElementById('toc-toggle-btn');
+      const label = document.getElementById('toc-toggle-label');
+      if (topics.length > TOC_VISIBLE_COUNT) {
+        btn.style.display = 'flex';
+        label.innerText = 'Show All ' + topics.length + ' Topics';
+      } else {
+        btn.style.display = 'none';
+      }
+    }
+
+    function getDownloadHref(p) {
+      if (p.downloadLink && p.downloadLink.trim()) return p.downloadLink.trim();
+      return 'chat-3.html?product=' + encodeURIComponent(p.id);
+    }
+
+    function renderDownloadButtons(p) {
+      const href = getDownloadHref(p);
+      const isDirect = !!(p.downloadLink && p.downloadLink.trim());
+      const priceText = (!p.price || Number(p.price) === 0) ? 'FREE' : ('₹' + p.price);
+
+      const hero = document.getElementById('heroDownloadBtn');
+      hero.href = href;
+      hero.target = '_blank';
+      hero.rel = 'noopener';
+      document.getElementById('heroDownloadLabel').textContent = isDirect ? '⚡ DIRECT DOWNLOAD PDF' : ('⚡ GET THIS BOOK — ' + priceText);
+
+      const subParts = [];
+      subParts.push(isDirect ? '100% Direct Link' : (priceText === 'FREE' ? '100% FREE' : priceText + ' Only'));
+      if (p.fileSize) subParts.push('File Size: ' + p.fileSize);
+      document.getElementById('heroDownloadSub').textContent = subParts.join(' • ');
+
+      const stickyBtn = document.getElementById('stickyDownloadBtn');
+      stickyBtn.href = href;
+      stickyBtn.target = '_blank';
+      stickyBtn.rel = 'noopener';
+      stickyBtn.textContent = isDirect ? '⚡ DOWNLOAD PDF' : '⚡ GET BOOK';
+
+      const priceNew = document.getElementById('stickyPriceNew');
+      const priceOld = document.getElementById('stickyPriceOld');
+      priceNew.textContent = priceText;
+
+      const priceNum = Number(p.price || 0);
+      let oldPriceNum = Number(p.oldPrice || 0);
+      if (!oldPriceNum && priceNum > 0) {
+        oldPriceNum = Math.round(priceNum * DEFAULT_OLD_PRICE_MULTIPLIER);
+      }
+      if (oldPriceNum > priceNum) {
+        priceOld.textContent = '₹' + oldPriceNum;
+        priceOld.style.display = '';
+      } else {
+        priceOld.style.display = 'none';
+      }
+    }
+
+    function populateBookPage(p) {
+      currentBook = p;
+      document.title = p.name + ' — My Selection Prep';
+      document.getElementById('pageTitleTag').textContent = p.name + ' — My Selection Prep';
+
+      const schemaEl = document.getElementById('bookSchema');
+      try {
+        const schema = JSON.parse(schemaEl.textContent);
+        schema.name = p.name;
+        if (p.author) schema.author = { '@type': 'Person', name: p.author };
+        if (p.publisher) schema.publisher = p.publisher;
+        if (p.language) schema.inLanguage = p.language;
+        if (p.pagesCount) schema.numberOfPages = p.pagesCount;
+        schema.offers.price = String(p.price || 0);
+        schemaEl.textContent = JSON.stringify(schema);
+      } catch (e) {}
+
+      const coverImg = document.getElementById('bookCoverImg');
+      coverImg.src = toDirectImageUrl(p.bannerImage || p.cardImage) || 'https://placehold.co/540x960/1e293b/ffffff.png?text=' + encodeURIComponent(p.name || 'Book');
+      coverImg.alt = p.name;
+
+      document.getElementById('bookTitle').textContent = p.name;
+      renderMetaBar(p);
+      renderDownloadButtons(p);
+      renderPreviewSection(p);
+      renderExamTags(p.examTags);
+      renderSpecs(p);
+      renderAbout(p);
+      renderTopics(p.topics);
+    }
+
+    function showLoadError(msg) {
+      document.getElementById('bookTitle').textContent = msg;
+      document.getElementById('preview-counter').innerText = '';
+      document.getElementById('heroDownloadLabel').textContent = 'Not Available';
+      document.getElementById('heroDownloadSub').textContent = '';
+    }
+
+    (function loadBook() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id') || params.get('product');
+      if (!id) { showLoadError('Book ID missing hai URL mein (?id=...)'); return; }
+
+      fetch('/.netlify/functions/get-all-products')
+        .then(function(res){ return res.json(); })
+        .then(function(items){
+          const p = items.find(function(x){ return x.id === id; });
+          if (!p) { showLoadError('Ye book nahi mili'); return; }
+          populateBookPage(p);
+
+          // Agar URL me #previewSection hash hai (Demo button se), scroll karo wahan
+          if (window.location.hash === '#previewSection') {
+            setTimeout(function(){
+              const el = document.getElementById('previewSection');
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 200);
+          }
+        })
+        .catch(function(){ showLoadError('Data load nahi ho paya'); });
+    })();
+  </script>
+
+</body>
+</html>

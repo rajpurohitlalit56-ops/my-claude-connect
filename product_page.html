@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Parmar's Maths Foundation Batch</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --primary-dark: #0F172A;
+            --accent: #2563EB;
+            --accent-gold: #F59E0B;
+            --bg-color: #F1F5F9;
+            --card-bg: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+            --border: #E2E8F0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 12px;
+        }
+
+        .container {
+            max-width: 500px; /* Mobile focused max-width */
+            margin: 0 auto;
+        }
+
+        /* 16:9 Image Aspect Ratio Container */
+        .banner-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+            background-color: var(--primary);
+        }
+
+        .banner-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.55);
+            color: #fff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .back-btn:active {
+            background: rgba(15, 23, 42, 0.75);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Top bar */
+        .topbar {
+            max-width: 500px;
+            margin: 0 auto 12px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border);
+        }
+
+        .topbar-icon-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+        }
+
+        .topbar-icon-btn:active {
+            background: var(--bg-color);
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .topbar-logo-slot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            /* logo yahan baad me daalna — abhi khaali rakha hai */
+        }
+
+        /* Watch demo pill (replaces the old badge) */
+        .demo-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: rgba(255, 255, 255, 0.18);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .demo-pill:active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Header Styling */
+        .header {
+            background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 24px 16px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.2);
+            margin-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Card Styling */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid #EFF6FF;
+            padding-bottom: 8px;
+        }
+
+        /* List Items for Mobile */
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+        }
+
+        .feature-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-icon {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 15px;
+            line-height: 1.2;
+        }
+
+        .feature-text strong {
+            color: var(--text-main);
+        }
+
+        /* Course Description Text */
+        .course-description {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .course-description p {
+            margin-bottom: 8px;
+        }
+
+        .course-description p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Play Store Style Horizontal Gallery (9:16 Cards) */
+        .gallery-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .gallery-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .gallery-scroll::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+
+        .media-card {
+            flex: 0 0 135px; /* 9:16 ratio width standard on mobile */
+            height: 240px;   /* 135 * (16/9) = 240px approx */
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            scroll-snap-align: start;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            background: #000;
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+
+        .media-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-tag {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.65);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 42px;
+            height: 42px;
+            background: rgba(37, 99, 235, 0.85);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(0,0,0,0.3);
+        }
+
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 14px solid #ffffff;
+            margin-left: 3px;
+        }
+
+        /* Modal Lightbox for Media Preview */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.92);
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 12px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: #fff;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 201;
+        }
+
+        .modal-nav:active {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .modal-nav-prev {
+            left: 10px;
+        }
+
+        .modal-nav-next {
+            right: 10px;
+        }
+
+        /* Single Pricing Plan Highlight */
+        .pricing-card {
+            background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%);
+            border: 2px solid var(--accent);
+            text-align: center;
+            position: relative;
+        }
+
+        .plan-tag {
+            background: var(--accent);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .price-container {
+            margin: 10px 0;
+        }
+
+        .price-currency {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .price-amount {
+            font-size: 44px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .price-period {
+            color: #059669;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 4px;
+            background: #D1FAE5;
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+
+        .plan-features {
+            text-align: left;
+            margin: 14px 0;
+            background: #ffffff;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .plan-features ul {
+            list-style: none;
+        }
+
+        .plan-features li {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .plan-features li:last-child {
+            margin-bottom: 0;
+        }
+
+        .plan-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10B981;
+            font-weight: bold;
+        }
+
+        .btn-buy {
+            display: block;
+            width: 100%;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+            transition: active 0.2s;
+        }
+
+        .btn-buy:active {
+            transform: scale(0.98);
+        }
+
+        /* Support / Need Help Link Under CTA */
+        .cta-support {
+            display: block;
+            text-align: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .cta-support span {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* Student Reviews (Wall of Fame) */
+        .reviews-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .reviews-rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            flex-shrink: 0;
+        }
+
+        .reviews-rating-summary i { color: var(--accent-gold); font-size: 14px; }
+        .reviews-rating-summary span.of5 { color: var(--text-muted); font-size: 12px; font-weight: 400; }
+
+        .filter-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .pill {
+            background: #fff;
+            border: 1px solid var(--border);
+            padding: 6px 13px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s ease;
+        }
+
+        .pill.active, .pill:active {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .pill .fa-star { color: var(--accent-gold); }
+        .pill.active .fa-star { color: #fff; }
+
+        .reviews-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .review-card {
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .review-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .review-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .review-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .review-user-details h4 {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .review-user-details p {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 2px;
+        }
+
+        .review-date {
+            font-size: 11px;
+            color: #94A3B8;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .review-stars-row {
+            color: var(--accent-gold);
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .review-text {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .read-more-btn {
+            color: var(--accent);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 12px;
+            display: inline-block;
+            margin-top: 2px;
+        }
+
+        .verified-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #10B981;
+            margin-top: auto;
+            padding-top: 8px;
+        }
+
+        .load-more-container {
+            text-align: center;
+            margin-top: 14px;
+        }
+
+        .load-more-btn {
+            background: #fff;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .load-more-btn:active { background: var(--bg-color); }
+
+        /* Topics Mobile Pills */
+        .topics-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .topic-pill {
+            background: #EFF6FF;
+            color: var(--primary);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #DBEAFE;
+        }
+
+        /* Sticky Bottom Mobile Bar */
+        .sticky-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            padding: 8px 16px;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sticky-main-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sticky-price {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sticky-price-val {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .sticky-price-lbl {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .sticky-btn {
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+        }
+
+        .sticky-support-link {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-top: 4px;
+        }
+
+        .sticky-support-link span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .space-for-sticky {
+            height: 75px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            padding: 10px 0 20px;
+        }
+
+        /* Login modal */
+        .login-modal-overlay {
+            position: fixed; inset: 0; z-index: 1200;
+            background: rgba(15, 23, 42, 0.55);
+            display: none;
+            align-items: center; justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .login-modal-overlay.open { display: flex; }
+        .login-modal-overlay.show { opacity: 1; }
+        .login-modal-card {
+            width: 100%; max-width: 360px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px 24px 24px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+            position: relative;
+            transform: translateY(14px) scale(0.96);
+            opacity: 0;
+            transition: transform 0.28s cubic-bezier(.2,.9,.3,1.2), opacity 0.25s ease;
+        }
+        .login-modal-overlay.show .login-modal-card {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        .login-modal-close {
+            position: absolute; top: 12px; right: 12px;
+            width: 30px; height: 30px; border-radius: 50%;
+            background: var(--bg-color); border: none; color: var(--text-muted);
+            font-size: 16px; cursor: pointer;
+        }
+        .login-modal-logo {
+            width: 68px; height: 68px; border-radius: 50%;
+            margin: 0 auto 14px;
+            overflow: hidden;
+            box-shadow: 0 0 0 4px var(--bg-color);
+            animation: loginLogoPop 0.4s cubic-bezier(.2,.9,.3,1.2);
+        }
+        .login-modal-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        @keyframes loginLogoPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .login-modal-card h3 {
+            font-size: 19px; font-weight: 700; color: var(--text-main); margin: 0 0 6px;
+        }
+        .login-modal-card p {
+            font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0 0 22px;
+        }
+        .video-watch-warning {
+            display: inline-block;
+            background: #FEF3C7;
+            color: #92400E;
+            border: 1px solid #FDE68A;
+            font-size: 12.5px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin: 4px 0 14px;
+        }
+        .google-signin-btn {
+            position: relative;
+            width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: #fff; border: 1.5px solid var(--border); color: var(--text-main);
+            font-weight: 700; font-size: 14px; padding: 12px; border-radius: 12px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: background 0.15s ease, transform 0.1s ease, border-color 0.3s ease;
+        }
+        .google-signin-btn:active { background: var(--bg-color); transform: scale(0.98); }
+        .google-signin-btn svg { width: 18px; height: 18px; transition: opacity 0.2s ease; }
+        .login-modal-note {
+            font-size: 11px; color: var(--text-muted); margin-top: 14px;
+        }
+        .login-modal-error {
+            display: none; font-size: 12px; color: #DC2626; margin-top: 10px;
+        }
+
+        /* Intro video (Odysee embed) shown above the description */
+        .login-modal-video-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #0f172a;
+            margin: 0 0 16px;
+        }
+        .login-modal-video-wrap iframe {
+            width: 100%; height: 100%; border: 0; display: block;
+        }
+        .video-unmute-hint {
+            position: absolute;
+            left: 8px; bottom: 8px;
+            background: rgba(15, 23, 42, 0.75);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 20px;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .video-unmute-hint.hidden { opacity: 0; }
+
+        /* Google button — waiting (disabled/greyed) state with fill-up progress */
+        .google-signin-btn .btn-fill {
+            position: absolute; inset: 0;
+            width: 0%;
+            background: linear-gradient(90deg, #C7D2FE, #4F46E5);
+            transition: width 1s linear;
+            z-index: 0;
+        }
+        .google-signin-btn .btn-label {
+            position: relative; z-index: 1;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%;
+        }
+        .google-signin-btn.waiting {
+            background: #E5E7EB; border-color: #E5E7EB; color: #9CA3AF;
+            cursor: not-allowed; pointer-events: none;
+        }
+        .google-signin-btn.waiting svg { opacity: 0.35; }
+        @keyframes googleBtnActivePop {
+            0% { transform: scale(0.92); }
+            55% { transform: scale(1.06); }
+            100% { transform: scale(1); }
+        }
+        .google-signin-btn.active-pop { animation: googleBtnActivePop 0.4s cubic-bezier(.2,.9,.3,1.2); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- 16:9 Image Header Banner -->
+    <div class="banner-container">
+        <button class="back-btn" id="backBtn" aria-label="Back">←</button>
+        <img src="" alt="" class="banner-img" id="pgBannerImg">
+    </div>
+
+    <!-- Main Header Title -->
+    <div class="header">
+        <h1 id="pgTitle">Loading...</h1>
+        <p id="pgSubtitle"></p>
+        <a href="#demoSection" class="demo-pill">🎬 Watch Demo</a>
+    </div>
+
+    <!-- Course Overview -->
+    <div class="card">
+        <div class="section-title">📌 Course Overview</div>
+        <ul class="feature-list" id="pgOverview"></ul>
+    </div>
+
+    <!-- Course Description -->
+    <div class="card">
+        <div class="section-title">📝 Course Description</div>
+        <div class="course-description" id="pgDescription"></div>
+    </div>
+
+    <!-- Demo Photos & Videos (Play Store Style 9:16) -->
+    <div class="card" id="demoSection">
+        <div class="section-title">🎬 Course Demo</div>
+        <div class="gallery-scroll" id="pgGallery"></div>
+    </div>
+
+    <!-- Single Pricing Plan -->
+    <div class="card pricing-card">
+        <span class="plan-tag" id="pgPlanBadge">Best Value Master Plan</span>
+        <div class="section-title" style="justify-content: center; border-bottom: none; padding-bottom: 0;">Pricing & Access Plan</div>
+
+        <div class="price-container">
+            <span class="price-currency">₹</span>
+            <span class="price-amount" id="pgPrice">--</span>
+            <div><span class="price-period" id="pgDuration"></span></div>
+        </div>
+
+        <div class="plan-features">
+            <ul id="pgPlanFeatures"></ul>
+        </div>
+
+        <a href="#" class="btn-buy" id="pgBuyBtn">Enroll Now</a>
+        <a href="https://t.me/your_support_handle" target="_blank" class="cta-support">❓ Need Help? <span>Contact Support</span></a>
+    </div>
+
+    <!-- Topics Covered -->
+    <div class="card" id="topicsCard" style="display:none;">
+        <div class="section-title">📚 Topics Covered</div>
+        <div class="topics-container" id="pgTopics"></div>
+    </div>
+
+    <!-- Student Reviews (Wall of Fame) -->
+    <div class="card">
+        <div class="reviews-header">
+            <div class="section-title" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">🏆 Student Reviews</div>
+            <div class="reviews-rating-summary"><i class="fa-solid fa-star"></i> 4.7 <span class="of5">/ 5</span></div>
+        </div>
+
+        <div class="filter-pills">
+            <button class="pill active" onclick="filterReviews('all', this)">All</button>
+            <button class="pill" onclick="filterReviews('5star', this)"><i class="fa-solid fa-star"></i> 5 Star</button>
+            <button class="pill" onclick="filterReviews('ssc', this)">SSC</button>
+            <button class="pill" onclick="filterReviews('railway', this)">Railway</button>
+        </div>
+
+        <div class="reviews-grid" id="reviewsGrid"></div>
+
+        <div class="load-more-container" id="loadMoreContainer">
+            <button class="load-more-btn" id="loadMoreBtn" onclick="loadMoreReviews()">
+                <i class="fa-solid fa-chevron-down"></i> Load More (<span id="remainingCount">0</span> remaining)
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer" id="pgFooter">
+        © myselectionprep. All Rights Reserved.
+    </div>
+
+    <div class="space-for-sticky"></div>
+
+</div>
+
+<!-- Mobile Friendly Sticky Bottom Action Bar -->
+<div class="sticky-footer">
+    <div class="sticky-main-row">
+        <div class="sticky-price">
+            <span class="sticky-price-val" id="pgStickyPrice">₹--</span>
+            <span class="sticky-price-lbl" id="pgStickyDuration">1 Year Access Plan</span>
+        </div>
+        <a href="#" class="sticky-btn" id="pgStickyBuyBtn">Buy Now</a>
+    </div>
+    <a href="https://t.me/your_support_handle" target="_blank" class="sticky-support-link">Need Help? <span>Talk to Support</span></a>
+</div>
+
+<!-- Modal Popup for Video & Image Preview -->
+<div id="mediaModal" class="modal">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <button class="modal-nav modal-nav-prev" onclick="showRelative(-1)" aria-label="Previous">&#10094;</button>
+    <div id="modalBody" style="width: 100%; display: flex; justify-content: center; align-items: center;"></div>
+    <button class="modal-nav modal-nav-next" onclick="showRelative(1)" aria-label="Next">&#10095;</button>
+</div>
+
+<script>
+    var MEDIA_ITEMS = [];
+    var currentProduct = null;
+    var currentMediaIndex = 0;
+
+    function escapeHtml(str){
+        return (str || '').replace(/[&<>"']/g, function(c){
+            return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+        });
+    }
+
+    function renderOverview(text){
+        var el = document.getElementById('pgOverview');
+        var lines = (text || '').split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
+        el.innerHTML = lines.map(function(line){
+            var colonIdx = line.indexOf(':');
+            var label = colonIdx > -1 ? line.slice(0, colonIdx) : '';
+            var rest = colonIdx > -1 ? line.slice(colonIdx + 1) : line;
+            return '<li class="feature-item"><span class="feature-icon">✔</span><span class="feature-text">' +
+                (label ? '<strong>' + escapeHtml(label) + ':</strong>' : '') + escapeHtml(rest) + '</span></li>';
+        }).join('');
+    }
+
+    function renderDescription(text){
+        var el = document.getElementById('pgDescription');
+        var paras = (text || '').split(/\n\s*\n/).map(function(p){ return p.trim(); }).filter(Boolean);
+        el.innerHTML = paras.map(function(p){ return '<p>' + escapeHtml(p) + '</p>'; }).join('');
+    }
+
+    function renderGallery(text){
+        var el = document.getElementById('pgGallery');
+        var lines = (text || '').split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
+        MEDIA_ITEMS = [];
+        lines.forEach(function(line){
+            var parts = line.split('|').map(function(p){ return p.trim(); });
+            if (parts[0] === 'video' && parts[2]) {
+                MEDIA_ITEMS.push({ type: 'video', thumb: parts[1], src: parts[2] });
+            } else if (parts[0] === 'image' && parts[1]) {
+                MEDIA_ITEMS.push({ type: 'image', thumb: parts[1], src: parts[1] });
+            }
+        });
+        el.innerHTML = MEDIA_ITEMS.map(function(item, i){
+            var playOverlay = item.type === 'video' ? '<div class="play-overlay"><div class="play-icon"></div></div>' : '';
+            var tag = item.type === 'video' ? 'Demo Video' : 'Class Note';
+            return '<div class="media-card" onclick="openModal(' + i + ')"><img src="' + escapeHtml(item.thumb) + '" alt="Demo">' +
+                '<span class="media-tag">' + tag + '</span>' + playOverlay + '</div>';
+        }).join('');
+        document.getElementById('demoSection').style.display = MEDIA_ITEMS.length ? '' : 'none';
+    }
+
+    function renderPlanFeatures(){
+        var el = document.getElementById('pgPlanFeatures');
+        var fixedFeatures = [
+            'Full 1-Year Unrestricted Access to all content',
+            'All Lecture and PDF content included',
+            'All Handwritten Class PDFs &amp; Practice Sheets included',
+            'Instant Access &amp; No Recurring Subscription Fees',
+            'One-time payment, Non-refundable'
+        ];
+        el.innerHTML = fixedFeatures.map(function(l){ return '<li>' + l + '</li>'; }).join('');
+    }
+
+    function renderTopics(text){
+        var card = document.getElementById('topicsCard');
+        var el = document.getElementById('pgTopics');
+        var topics = (text || '').split(',').map(function(t){ return t.trim(); }).filter(Boolean);
+        if (!topics.length) { card.style.display = 'none'; return; }
+        card.style.display = '';
+        el.innerHTML = topics.map(function(t){ return '<span class="topic-pill">' + escapeHtml(t) + '</span>'; }).join('');
+    }
+
+    function populatePage(p){
+        currentProduct = p;
+        document.title = p.name + ' — myselectionprep';
+
+        document.getElementById('pgBannerImg').src = p.bannerImage || p.cardImage || '';
+        document.getElementById('pgBannerImg').alt = p.name;
+        document.getElementById('pgTitle').textContent = p.name;
+        document.getElementById('pgSubtitle').textContent = p.by || '';
+
+        renderOverview(p.overview);
+        renderDescription(p.fullDescription || p.desc || '');
+        renderGallery(p.demoMedia);
+
+        document.getElementById('pgPlanBadge').textContent = p.planBadge || 'Best Value Plan';
+        document.getElementById('pgPrice').textContent = p.price;
+        document.getElementById('pgDuration').textContent = p.duration || '';
+        renderPlanFeatures();
+        renderTopics(p.topics);
+
+        var buyHref = (p.category === 'batch' ? 'chat-3.html?product=' : 'chat-3.html?product=') + p.id;
+        document.getElementById('pgBuyBtn').href = buyHref;
+        document.getElementById('pgBuyBtn').textContent = 'Enroll Now for ₹' + p.price;
+        document.getElementById('pgStickyBuyBtn').href = buyHref;
+        document.getElementById('pgStickyPrice').textContent = '₹' + p.price;
+        document.getElementById('pgStickyDuration').textContent = p.duration || '';
+    }
+
+    function showLoadError(msg){
+        document.getElementById('pgTitle').textContent = msg;
+    }
+
+    (function loadProduct(){
+        var params = new URLSearchParams(window.location.search);
+        var id = params.get('id') || params.get('product');
+        if (!id) { showLoadError('Product ID missing hai URL mein (?id=...)'); return; }
+
+        fetch('/.netlify/functions/get-all-products')
+            .then(function(res){ return res.json(); })
+            .then(function(items){
+                var p = items.find(function(x){ return x.id === id; });
+                if (!p) { showLoadError('Ye product nahi mila'); return; }
+                populatePage(p);
+            })
+            .catch(function(){ showLoadError('Data load nahi ho paya'); });
+    })();
+
+    function renderModalItem(index) {
+        var modalBody = document.getElementById('modalBody');
+        var item = MEDIA_ITEMS[index];
+        modalBody.innerHTML = '';
+
+        if (item.type === 'video') {
+            modalBody.innerHTML = '<video controls autoplay class="modal-content" style="max-height: 80vh;"><source src="' + item.src + '" type="video/mp4">Your browser does not support video.</video>';
+        } else {
+            modalBody.innerHTML = '<img src="' + item.src + '" class="modal-content" style="max-height: 80vh; object-fit: contain;">';
+        }
+    }
+
+    function openModal(index) {
+        currentMediaIndex = index;
+        var modal = document.getElementById('mediaModal');
+        renderModalItem(currentMediaIndex);
+        modal.style.display = 'flex';
+    }
+
+    function showRelative(step) {
+        currentMediaIndex = (currentMediaIndex + step + MEDIA_ITEMS.length) % MEDIA_ITEMS.length;
+        renderModalItem(currentMediaIndex);
+    }
+
+    function closeModal() {
+        var modal = document.getElementById('mediaModal');
+        var modalBody = document.getElementById('modalBody');
+        modalBody.innerHTML = '';
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        var modal = document.getElementById('mediaModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        var modal = document.getElementById('mediaModal');
+        if (modal.style.display !== 'flex') return;
+        if (e.key === 'ArrowLeft') showRelative(-1);
+        if (e.key === 'ArrowRight') showRelative(1);
+        if (e.key === 'Escape') closeModal();
+    });
+
+    /* Swipe support for mobile */
+    var touchStartX = 0;
+    var modalEl = document.getElementById('mediaModal');
+    modalEl.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    modalEl.addEventListener('touchend', function(e) {
+        var touchEndX = e.changedTouches[0].screenX;
+        var diff = touchEndX - touchStartX;
+        if (Math.abs(diff) > 40) {
+            showRelative(diff > 0 ? -1 : 1);
+        }
+    });
+</script>
+
+<script>
+  /* ===== Student Reviews (Wall of Fame) ===== */
+  const allReviews = [
+    { id: 1, name: "Ankit Singh", location: "Noida, Sector 62, UP", date: "April 2025", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100", category: ["ssc"], rating: 5, shortText: "I was really struggling with GK before joining this batch. The way the topics are broken down — static GK, current affairs, and polity...", fullText: "I was really struggling with GK before joining this batch. The way the topics are broken down — static GK, current affairs, and polity — everything is structured logically. High yield points are highlighted." },
+    { id: 2, name: "Pooja Kumari", location: "Patna, Kankarbagh, Bihar", date: "March 2025", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100", category: ["ssc", "railway"], rating: 5, shortText: "Preparing from home without any coaching and was worried about not getting proper guidance. This batch changed everything...", fullText: "Preparing from home without any coaching and was worried about not getting proper guidance. This batch changed everything. Notes are concise, structured, and easy to review." },
+    { id: 3, name: "Rahul Yadav", location: "Prayagraj, Civil Lines, UP", date: "February 2025", avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100", category: ["ssc"], rating: 5, shortText: "The maths section is explained very clearly — even complex topics like time and work, pipes and cisterns are taught with simple tricks...", fullText: "The maths section is explained very clearly — even complex topics like time and work, pipes and cisterns are taught with simple tricks that save a lot of time during the exam." },
+    { id: 4, name: "Neha Sharma", location: "Jaipur, Vaishali Nagar, Rajasthan", date: "March 2025", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100", category: ["railway"], rating: 5, shortText: "I had tried two other online courses before this and was disappointed both times. This one is different — everything is covered in one place...", fullText: "I had tried two other online courses before this and was disappointed both times. This one is different — everything is covered in one place: reasoning, English, maths, and general awareness." },
+    { id: 5, name: "Vikas Kumar", location: "Delhi, Laxmi Nagar", date: "April 2025", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100", category: ["ssc"], rating: 5, shortText: "I purchased the batch in the evening and got access within minutes. I was watching the first lecture the same night...", fullText: "I purchased the batch in the evening and got access within minutes. I was watching the first lecture the same night. That kind of instant, no-hassle experience really matters." },
+    { id: 6, name: "Saurabh Mishra", location: "Lucknow, Aliganj, UP", date: "January 2025", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100", category: ["ssc"], rating: 5, shortText: "Parmar Sir has a gift for making difficult concepts feel easy. He does not just solve problems — he explains the logic...", fullText: "Parmar Sir has a gift for making difficult concepts feel easy. He does not just solve problems — he explains the logic and the thought process behind every step clearly." },
+    { id: 7, name: "Ritika Verma", location: "Indore, Vijay Nagar, MP", date: "April 2025", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100", category: ["railway"], rating: 5, shortText: "The PDFs provided with each topic are a lifesaver before exams. I had gone through almost the entire syllabus...", fullText: "The PDFs provided with each topic are a lifesaver before exams. I had gone through almost the entire syllabus but used these PDFs to revise everything in just a couple of days." },
+    { id: 8, name: "Aman Gupta", location: "Kanpur, Kakadeo, UP", date: "March 2025", avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100", category: ["ssc"], rating: 5, shortText: "I joined this batch just a month before my exam with barely any time to prepare. What surprised me was how quickly I could get through...", fullText: "I joined this batch just a month before my exam with barely any time to prepare. What surprised me was how quickly I could get through the important topics with the concise lectures." },
+    { id: 9, name: "Shivani Patel", location: "Ahmedabad, Satellite, Gujarat", date: "April 2025", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100", category: ["ssc", "railway"], rating: 5, shortText: "This is genuinely a complete package. Video lectures, notes, practice questions, and mock tests — everything is available under one roof...", fullText: "This is genuinely a complete package. Video lectures, notes, practice questions, and mock tests — everything is available under one roof." },
+    { id: 10, name: "Deepak Raj", location: "Ranchi, Harmu, Jharkhand", date: "January 2025", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100", category: ["railway"], rating: 5, shortText: "I was preparing for railway exams and found this batch very useful. The reasoning section especially is very well explained...", fullText: "I was preparing for railway exams and found this batch very useful. The reasoning section especially is very well explained with different types of practice questions." },
+    { id: 11, name: "Karan Mehta", location: "Chandigarh, Sector 17", date: "March 2025", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100", category: ["ssc"], rating: 5, shortText: "Simple, effective, and no-nonsense teaching. I have watched lectures on expensive platforms and honestly found this more engaging...", fullText: "Simple, effective, and no-nonsense teaching. I have watched lectures on expensive platforms and honestly found this more engaging. The course layout is very crisp." },
+    { id: 12, name: "Monika Yadav", location: "Gurugram, Sector 14, Haryana", date: "April 2025", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100", category: ["ssc", "railway"], rating: 5, shortText: "I have been using this batch for both SSC and railway exam preparation. The syllabus overlap is well handled...", fullText: "I have been using this batch for both SSC and railway exam preparation. The syllabus overlap is well handled and you do not need separate courses." },
+    { id: 13, name: "Tanya Singh", location: "Noida, Sector 18, UP", date: "April 2025", avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100", category: ["ssc"], rating: 5, shortText: "I got instant access right after payment. No waiting, no emails, no delays — I was inside the course dashboard within two minutes...", fullText: "I got instant access right after payment. No waiting, no emails, no delays — I was inside the course dashboard within two minutes. Interface is smooth." },
+    { id: 14, name: "Gaurav Pandey", location: "Ayodhya, UP", date: "February 2025", avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100", category: ["ssc"], rating: 5, shortText: "Good explanations with clear notes for every topic. The polity section is one of the best I have come across...", fullText: "Good explanations with clear notes for every topic. The polity section is one of the best I have come across — every article and amendment is explained simply." },
+    { id: 15, name: "Arjun Patel", location: "Surat, Gujarat", date: "March 2025", avatar: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=100", category: ["ssc", "railway"], rating: 5, shortText: "This is the best platform I have found for competitive exam preparation at this price. Both SSC and railway exam patterns are covered...", fullText: "This is the best platform I have found for competitive exam preparation at this price. Both SSC and railway exam patterns are covered thoroughly." },
+    { id: 16, name: "Meena Kumari", location: "Dhanbad, Jharkhand", date: "April 2025", avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100", category: ["railway"], rating: 5, shortText: "Very helpful course content, especially for railway exam aspirants. The general science section, which matters a lot in railway exams...", fullText: "Very helpful course content, especially for railway exam aspirants. The general science section, which matters a lot in railway exams, is covered in detail." },
+    { id: 17, name: "Sachin Verma", location: "Bareilly, UP", date: "January 2025", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100", category: ["ssc"], rating: 5, shortText: "Good value for money. I compared this with a few other courses in the same price range and this one offers more content...", fullText: "Good value for money. I compared this with a few other courses in the same price range and this one offers more content, better explanations, and faster support." },
+    { id: 18, name: "Komal Sharma", location: "Alwar, Rajasthan", date: "March 2025", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100", category: ["ssc"], rating: 5, shortText: "Highly recommended for any SSC aspirant. I followed this batch for three months consistently and saw a clear improvement...", fullText: "Highly recommended for any SSC aspirant. I followed this batch for three months consistently and saw a clear improvement in my mock test scores." }
+  ];
+
+  var reviewsCurrentCategory = 'all';
+  var reviewsDisplayedCount = 5;
+  var REVIEWS_INITIAL_COUNT = 5;
+  var REVIEWS_LOAD_STEP = 5;
+
+  function getFilteredReviews() {
+    if (reviewsCurrentCategory === 'all' || reviewsCurrentCategory === '5star') {
+      return allReviews;
+    }
+    return allReviews.filter(function(item){ return item.category.indexOf(reviewsCurrentCategory) > -1; });
+  }
+
+  function toggleReviewText(id) {
+    var textEl = document.getElementById('text-' + id);
+    var btnEl = document.getElementById('btn-' + id);
+    var review = allReviews.find(function(r){ return r.id === id; });
+
+    if (btnEl.innerText.indexOf('Read more') > -1) {
+      textEl.innerText = review.fullText;
+      btnEl.innerHTML = 'Read less <i class="fa-solid fa-angle-up" style="font-size:10px;"></i>';
+    } else {
+      textEl.innerText = review.shortText;
+      btnEl.innerHTML = 'Read more <i class="fa-solid fa-angle-right" style="font-size:10px;"></i>';
+    }
+  }
+
+  function getAvatarColor(name) {
+    var palette = ['#2563EB','#7C3AED','#DB2777','#EA580C','#16A34A','#0891B2','#4F46E5','#CA8A04'];
+    var hash = 0;
+    for (var i = 0; i < name.length; i++) { hash = name.charCodeAt(i) + ((hash << 5) - hash); }
+    return palette[Math.abs(hash) % palette.length];
+  }
+
+  function getInitials(name) {
+    var parts = (name || '').trim().split(/\s+/);
+    var initials = parts[0] ? parts[0][0] : '';
+    if (parts.length > 1) { initials += parts[parts.length - 1][0]; }
+    return initials.toUpperCase();
+  }
+
+  /* Self-contained initials avatar — generated as an inline SVG data URI,
+     so no external image hosting is needed and nothing can break/hotlink-fail. */
+  function initialsAvatar(name) {
+    var color = getAvatarColor(name);
+    var initials = getInitials(name);
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="88" height="88">' +
+      '<rect width="88" height="88" rx="44" fill="' + color + '"/>' +
+      '<text x="44" y="58" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#fff" text-anchor="middle">' + initials + '</text>' +
+      '</svg>';
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+  }
+
+  function createReviewCard(review) {
+    return '' +
+      '<div class="review-card">' +
+        '<div>' +
+          '<div class="review-card-top">' +
+            '<div class="review-user-info">' +
+              '<img class="review-avatar" src="' + initialsAvatar(review.name) + '" alt="' + escapeHtml(review.name) + '">' +
+              '<div class="review-user-details">' +
+                '<h4>' + escapeHtml(review.name) + '</h4>' +
+                '<p><i class="fa-solid fa-location-dot"></i> ' + escapeHtml(review.location) + '</p>' +
+              '</div>' +
+            '</div>' +
+            '<span class="review-date">' + escapeHtml(review.date) + '</span>' +
+          '</div>' +
+          '<div class="review-stars-row">' +
+            '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>' +
+          '</div>' +
+          '<div class="review-text">' +
+            '<span id="text-' + review.id + '">' + escapeHtml(review.shortText) + '</span>' +
+            '<div><span class="read-more-btn" id="btn-' + review.id + '" onclick="toggleReviewText(' + review.id + ')">Read more <i class="fa-solid fa-angle-right" style="font-size:10px;"></i></span></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified student</div>' +
+      '</div>';
+  }
+
+  function renderReviews() {
+    var filteredData = getFilteredReviews();
+    var grid = document.getElementById('reviewsGrid');
+    if (!grid) return;
+
+    grid.innerHTML = filteredData.slice(0, reviewsDisplayedCount).map(createReviewCard).join('');
+
+    var remaining = filteredData.length - reviewsDisplayedCount;
+    var loadMoreBtnContainer = document.getElementById('loadMoreContainer');
+
+    if (remaining <= 0) {
+      loadMoreBtnContainer.style.display = 'none';
+    } else {
+      loadMoreBtnContainer.style.display = 'block';
+      document.getElementById('remainingCount').innerText = remaining;
+    }
+  }
+
+  function loadMoreReviews() {
+    reviewsDisplayedCount += REVIEWS_LOAD_STEP;
+    renderReviews();
+  }
+
+  function filterReviews(category, element) {
+    reviewsCurrentCategory = category;
+    reviewsDisplayedCount = REVIEWS_INITIAL_COUNT;
+
+    document.querySelectorAll('.pill').forEach(function(btn){ btn.classList.remove('active'); });
+    element.classList.add('active');
+
+    renderReviews();
+  }
+
+  renderReviews();
+</script>
+
+<!-- Google Sign-in modal -->
+<div class="login-modal-overlay" id="loginModalOverlay" role="dialog" aria-modal="true">
+    <div class="login-modal-card">
+        <button class="login-modal-close" id="loginModalCloseBtn" aria-label="Close">&#10005;</button>
+        <div class="login-modal-logo"><img src="images/logo.png" alt="myselectionprep"></div>
+        <h3>Welcome</h3>
+        <div class="video-watch-warning">⚠️ video pura dekhiye</div>
+        <div class="login-modal-video-wrap" id="loginModalVideoWrap">
+            <iframe id="loginModalVideoFrame" src="" title="Intro video" allow="autoplay; fullscreen; encrypted-media" allowfullscreen frameborder="0"></iframe>
+            <div class="video-unmute-hint" id="videoUnmuteHint">🔇 Sound on karne ke liye video pe tap karo</div>
+        </div>
+        <p>myselectionprep mein aage badhne ke liye Google se sign in karo — sign in hote hi tumhara purchase process turant continue ho jayega</p>
+        <button class="google-signin-btn" id="googleSignInBtn">
+            <span class="btn-fill" id="googleBtnFill"></span>
+            <span class="btn-label">
+                <svg id="googleBtnIcon" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.5 5.1 29.5 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34.5 6.1 29.5 4 24 4c-7.7 0-14.4 4.4-17.7 10.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.6-5.2l-6.3-5.3C29.3 35.6 26.8 36.5 24 36.5c-5.3 0-9.7-3.4-11.3-8.1l-6.5 5C9.6 39.5 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.2 5.7l6.3 5.3C40.9 36.6 44 30.9 44 24c0-1.4-.1-2.4-.4-3.5z"/></svg>
+                <span id="googleBtnText">Continue with Google</span>
+            </span>
+        </button>
+        <div class="login-modal-error" id="loginModalError">Login nahi ho paya, dobara try karo</div>
+        <div class="login-modal-note">Sign in sirf ye confirm karne ke liye hai ki purchase tumhare account se track ho sake</div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script>
+    /* !!! IMPORTANT — apni Firebase web app config yahan daalo !!!
+       Firebase Console → Project Settings → General → "Your apps" → Web app (</>) se milegi.
+       Ye wahi Firebase project hona chahiye jiska admin panel/Firestore use ho raha hai. */
+    var firebaseConfig = {
+        apiKey: "AIzaSyBLV9SCkEZFomf2sHyXt3f0yLIYFppSj0E",
+        authDomain: "try9653-aa039.firebaseapp.com",
+        projectId: "try9653-aa039",
+        storageBucket: "try9653-aa039.firebasestorage.app",
+        messagingSenderId: "351044147539",
+        appId: "1:351044147539:web:0aaf62f3d25d525440a9a6"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var auth = firebase.auth();
+    var pendingBuyHref = null;
+
+    /* ===== Intro video + Google button wait-timer =====
+       Replace ODYSEE_EMBED_URL below with your actual Odysee embed link,
+       e.g. "<iframe id="odysee-iframe" style="width:100%; aspect-ratio:16 / 9;" src="https://odysee.com/%24/embed/%40Selectionclasses%3Ac%2FVN20260829_123807%3A7?r=8sQV4WkcUWxyf2SXfT6x7LoSKxAyDsYU&signature=a679ed5d6db740d2e9af061ec6cd67e96c728e3c2e18cd1be4c9f5c1f99e5dc4395c128f62d3ab5e1c5bc538d42ce24da96871756a1864940d0acc6c426728c1&signature_ts=1789288872" allowfullscreen></iframe>" */
+    var ODYSEE_EMBED_URL = "https://odysee.com/%24/embed/%40Selectionclasses%3Ac%2FVN20260829_123807%3A7?r=8sQV4WkcUWxyf2SXfT6x7LoSKxAyDsYU&signature=a679ed5d6db740d2e9af061ec6cd67e96c728e3c2e18cd1be4c9f5c1f99e5dc4395c128f62d3ab5e1c5bc538d42ce24da96871756a1864940d0acc6c426728c1&signature_ts=1789288872&autoplay=1";
+    var VIDEO_WAIT_SECONDS = 15;
+    var VIDEO_SEEN_KEY = 'msp_intro_video_seen';
+    var googleBtnCountdownTimer = null;
+
+    function hasSeenIntroVideo(){
+        try { return localStorage.getItem(VIDEO_SEEN_KEY) === '1'; } catch(e){ return false; }
+    }
+    function markIntroVideoSeen(){
+        try { localStorage.setItem(VIDEO_SEEN_KEY, '1'); } catch(e){}
+    }
+
+    function startGoogleBtnCountdown(){
+        var btn = document.getElementById('googleSignInBtn');
+        var fill = document.getElementById('googleBtnFill');
+        var textEl = document.getElementById('googleBtnText');
+        var seconds = VIDEO_WAIT_SECONDS;
+
+        clearInterval(googleBtnCountdownTimer);
+        btn.classList.remove('active-pop');
+        btn.classList.add('waiting');
+        fill.style.width = '0%';
+        textEl.textContent = '⏳ Please wait... (' + seconds + 's)';
+
+        googleBtnCountdownTimer = setInterval(function(){
+            seconds--;
+            var pct = Math.round(((VIDEO_WAIT_SECONDS - seconds) / VIDEO_WAIT_SECONDS) * 100);
+            fill.style.width = Math.min(pct, 100) + '%';
+            if (seconds > 0) {
+                textEl.textContent = '⏳ Please wait... (' + seconds + 's)';
+            } else {
+                clearInterval(googleBtnCountdownTimer);
+                enableGoogleBtn();
+                markIntroVideoSeen();
+            }
+        }, 1000);
+    }
+
+    function enableGoogleBtn(){
+        var btn = document.getElementById('googleSignInBtn');
+        var fill = document.getElementById('googleBtnFill');
+        var textEl = document.getElementById('googleBtnText');
+        btn.classList.remove('waiting');
+        textEl.textContent = 'Continue with Google';
+        btn.classList.add('active-pop');
+        setTimeout(function(){
+            btn.classList.remove('active-pop');
+            fill.style.width = '0%';
+        }, 450);
+    }
+
+    /* Returning users who've already watched the video once: skip the
+       wait and show the button active immediately. */
+    function showGoogleBtnActiveImmediately(){
+        clearInterval(googleBtnCountdownTimer);
+        var btn = document.getElementById('googleSignInBtn');
+        var fill = document.getElementById('googleBtnFill');
+        var textEl = document.getElementById('googleBtnText');
+        btn.classList.remove('waiting');
+        fill.style.width = '0%';
+        textEl.textContent = 'Continue with Google';
+    }
+
+    function showLoginModal(){
+        document.getElementById('loginModalError').style.display = 'none';
+        var overlay = document.getElementById('loginModalOverlay');
+        overlay.classList.add('open');
+        requestAnimationFrame(function(){ overlay.classList.add('show'); });
+
+        var hint = document.getElementById('videoUnmuteHint');
+        if (hint) { hint.classList.remove('hidden'); }
+
+        var frame = document.getElementById('loginModalVideoFrame');
+        if (frame) { frame.src = ODYSEE_EMBED_URL; }
+
+        if (hasSeenIntroVideo()) {
+            showGoogleBtnActiveImmediately();
+        } else {
+            startGoogleBtnCountdown();
+        }
+
+        /* Fade the "tap for sound" hint out after a few seconds so it
+           doesn't sit on screen the whole time. */
+        clearTimeout(window._videoHintTimeout);
+        window._videoHintTimeout = setTimeout(function(){
+            if (hint) hint.classList.add('hidden');
+        }, 6000);
+    }
+    function hideLoginModal(){
+        var overlay = document.getElementById('loginModalOverlay');
+        overlay.classList.remove('show');
+        setTimeout(function(){ overlay.classList.remove('open'); }, 250);
+
+        clearInterval(googleBtnCountdownTimer);
+        clearTimeout(window._videoHintTimeout);
+        var frame = document.getElementById('loginModalVideoFrame');
+        if (frame) { frame.src = ''; }
+    }
+
+    function isPopupBlockedErr(err){
+        return err && (
+            err.code === 'auth/popup-blocked' ||
+            err.code === 'auth/popup-closed-by-user' ||
+            err.code === 'auth/cancelled-popup-request' ||
+            err.code === 'auth/operation-not-supported-in-this-environment'
+        );
+    }
+
+    function handleBuyClick(e){
+        e.preventDefault();
+        pendingBuyHref = this.getAttribute('href');
+        if (auth.currentUser) {
+            window.location.href = pendingBuyHref;
+        } else {
+            showLoginModal();
+        }
+    }
+
+    document.getElementById('backBtn').addEventListener('click', function(){
+        if (document.referrer && document.referrer.indexOf(window.location.host) !== -1 && window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = 'index.html';
+        }
+    });
+
+    document.getElementById('pgBuyBtn').addEventListener('click', handleBuyClick);
+    document.getElementById('pgStickyBuyBtn').addEventListener('click', handleBuyClick);
+    document.getElementById('loginModalCloseBtn').addEventListener('click', hideLoginModal);
+    document.getElementById('loginModalOverlay').addEventListener('click', function(e){
+        if (e.target === this) hideLoginModal();
+    });
+
+    document.getElementById('googleSignInBtn').addEventListener('click', function(){
+        if (this.classList.contains('waiting')) return;
+        var provider = new firebase.auth.GoogleAuthProvider();
+        /* Save where the person wanted to go before we leave the page —
+           needed for the redirect fallback below, since a redirect reloads
+           the page and wipes any in-memory JS variables. */
+        if (pendingBuyHref) {
+            try { sessionStorage.setItem('pendingBuyHref', pendingBuyHref); } catch(e){}
+        }
+        auth.signInWithPopup(provider).then(function(){
+            hideLoginModal();
+            if (pendingBuyHref) window.location.href = pendingBuyHref;
+        }).catch(function(err){
+            console.error('Sign-in popup error:', err);
+            /* In-app browsers (Telegram, Instagram, etc.) and many mobile
+               browsers silently block signInWithPopup. Fall back to a
+               full-page redirect sign-in instead of just failing. */
+            if (isPopupBlockedErr(err)) {
+                auth.signInWithRedirect(provider).catch(function(err2){
+                    console.error('Sign-in redirect error:', err2);
+                    document.getElementById('loginModalError').style.display = 'block';
+                });
+                return;
+            }
+            document.getElementById('loginModalError').style.display = 'block';
+        });
+    });
+
+    /* Completes sign-in after a redirect round trip and resumes the
+       purchase the person was in the middle of. */
+    auth.getRedirectResult().then(function(result){
+        if (result && result.user) {
+            var savedHref = null;
+            try { savedHref = sessionStorage.getItem('pendingBuyHref'); } catch(e){}
+            if (savedHref) {
+                try { sessionStorage.removeItem('pendingBuyHref'); } catch(e){}
+                window.location.href = savedHref;
+            }
+        }
+    }).catch(function(err){
+        console.error('Redirect sign-in error:', err);
+        document.getElementById('loginModalError').style.display = 'block';
+        showLoginModal();
+    });
+</script>
+
+</body>
+</html>
